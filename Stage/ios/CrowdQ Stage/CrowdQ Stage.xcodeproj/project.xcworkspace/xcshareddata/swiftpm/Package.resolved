@@ -1,0 +1,15 @@
+{
+  "originHash" : "d48f028cc9bd2d0709287befdb985785ac75db82d882f2f2f80ac537493e6d47",
+  "pins" : [
+    {
+      "identity" : "luxcgiwithjson",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/luxcedia/LuxCGIWithJSON",
+      "state" : {
+        "revision" : "bcd300c088d2ada617d8bed2bf2a605d78aa8942",
+        "version" : "1.0.5"
+      }
+    }
+  ],
+  "version" : 3
+}
