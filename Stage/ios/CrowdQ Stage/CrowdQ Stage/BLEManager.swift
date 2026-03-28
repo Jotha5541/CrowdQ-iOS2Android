@@ -99,6 +99,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelega
         }
     }
 }
+
 /*
 import Foundation
 import CoreBluetooth
