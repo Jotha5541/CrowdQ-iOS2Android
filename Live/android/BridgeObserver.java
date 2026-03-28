@@ -16,86 +16,116 @@ import android.os.ParcelUuid;
 import android.util.Log;
 import androidx.core.content.ContextCompat;
 
+import icu.luxcedia.crowdq.core.threading.SerialExecutor;
 import icu.luxcedia.crowdq.exchange.CrowdQExchange;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.UUID;
 
 public class BridgeObserver {
     private static final String TAG = "BridgeObserver";
 
-    // Optimization: dispatch handling to single-thread executor
-    private final ExecutorService serialQueue = Executors.newSingleThreadExecutor();
-
-    private final LiveCoordinator coordinator;
-    private int lastSequence = -1;
-
-    // Constructor injection
-    public BridgeObserver(LiveCoordinator coordinator) {
-        this.coordinator = coordinator;
+    public interface Listener {
+        void onLoadShow(String showName);
+        void onCommand(String command, int argument);
     }
 
-    private final ParcelUuid phonesUuid = ParcelUuid.fromString("0000EEEE-0000-1000-8000-00805f9b34fb");
-    private BluetoothLeScanner scanner;
+    private final UUID phonesUuid;
+    private final Listener listener;
 
+    // Optimization: dispatch handling to single-thread executor
+    private final SerialExecutor serialExecutor = new SerialExecutor("bridge-observer");
+
+    private BluetoothLeScanner scanner;
+    private ScanCallback scanCallback;
+    private int lastSequence = -1;
     private String currentShowName;
 
-    public void startObserving(Context context) {
-        if (!hasScanPermissions(context)) return;
-
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        if (adapter != null && adapter.isEnabled()) {
-            scanner = adapter.getBluetoothLeScanner();
-
-            ScanFilter filter = new ScanFilter.Builder()
-                    .setServiceUuid(phonesUuid)
-                    .build();
-
-            ScanSettings settings = new ScanSettings.Builder()
-                    .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                    .build();
-
-            scanner.startScan(Collections.singletonList(filter), settings, scanCallback);
-        }
+    // Constructor injection
+    public BridgeObserver(UUID phonesUuid, Listener listener) {
+        this.phonesUuid = phonesUuid;
+        this.listener = listener;
     }
 
-    private final ScanCallback scanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            ScanRecord record = result.getScanRecord();
-            if (record == null) return;
-
-            // Extract packet directly from service data
-            byte[] serviceData = record.getServiceData(phonesUuid);
-            if (serviceData != null) {
-                // Parse once using UTF-8 string, allowing CrowdQExchange to parse without substrings
-                String payloadStr = new String(serviceData, StandardCharsets.UTF_8);
-                CrowdQExchange exchange = CrowdQExchange.parse(payloadStr);
-
-                if (exchange != null) {
-                    // Dispatch to single thread executor
-                    serialQueue.execute(() -> handleExchange(exchange));
-                }
-            }
+    public void startScan(Context context) {
+        if (!hasScanPermissions(context)) {
+            Log.e(TAG, "Missing Bluetooth Scan permissions.");
+            return;
         }
-    };
 
-    private void handleExchange(CrowdQExchange exchange) {
-        // Enforce ordering
-        if (exchange.getSequence() > lastSequence) {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (adapter == null || !adapter.isEnabled()) return;
+
+        scanner = adapter.getBluetoothLeScanner();
+        if (scanner == null) return;
+
+        ScanFilter filter = new ScanFilter.Builder()
+                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+                .setReportDelay(0L)
+                .build();
+
+        scanCallback = new ScanCallback() {
+            @Override
+            public void onScanResult(int callbackType, ScanResult result) {
+                handleScanResult(result);
+            }
+        };
+        @SuppressLint("MissingPermission")
+        scanner.startScan(Collections.singletonList(filter), settings, scanCallback);
+    }
+
+    public void stopScan() {
+        if (scanner != null && scanCallback != null) {
+            @SuppressLint("Missing Permission")
+            scanner.stopScan(scanCallback);
+        }
+        serialExecutor.shutdown();
+    }
+
+    // Handling incoming telemetry
+    private void handleExchange(ScanResult result) {
+        ScanRecord record = result.getScanRecord();
+        if (record == null) return;
+
+        /* Extract packets from service data */
+        byte[] packetBytes = record.getServiceData(new ParcelUuid(phonesUuid));
+        if (packetBytes == null || packetBytes.length < 8) return;
+
+        // Optimization: Deny byte arrays
+        String packet = new String(packetBytes, StandardCharsets.US_ASCII);
+        CrowdQExchange exchange = CrowdQExchange.parse(packet);
+        if (exchange == null) return;
+
+        // Optimization: Dispatch handling to single-thread queue
+        serialExecutor.execute(() -> {
+            if (exchange.getSequence() <= lastSequence) {
+                Log.d(TAG, "Ignored out-of-order packet. Current: " + exchange.getSequence() + ", Last: " + lastSequence);
+                return;
+            }
+
             lastSequence = exchange.getSequence();
             Log.d(TAG, "Processed: " + exchange.toString());
 
-            coordinator.onExchangePacket(exchange);
-        }
-        else {
-            Log.d(TAG, "Ignored out-of-order packet. Current: " + exchange.getSequence() + ", Last: " + lastSequence);
-        }
+            switch(exchange.getTag()) {
+                case LOAD:
+                    if (currentShowName == null || !currentShowName.equals(exchange.getPayload())) {
+                        currentShowName = exchange.getPayload();
+                        listener.onLoadShow(currentShowName);
+                    }
+                    break;
+                case COMMAND:
+                    listener.onCommand(exchange.getPayload(), exchange.getArgument());
+                    break;
+                case RESTART:
+                case SHOW:
+                case SHOWDATA:
+                default:
+                    break;
+            }
+        });
     }
-
-    private boolean hasScanPermissions(Context context) {
+  private boolean hasScanPermissions(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             return ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED;
         }

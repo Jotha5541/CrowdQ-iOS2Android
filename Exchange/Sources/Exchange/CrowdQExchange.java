@@ -8,7 +8,7 @@ public class CrowdQExchange {
     private int argument;
     private String payload;
 
-    // Fast, zero-allocation Base64 decoding lookup table
+    // Optimization: zero allocation + deny byte array
     private static final int[] B64_INV = new int[128];
     static {
         for (int i = 0; i < 128; i++) B64_INV[i] = -1;
