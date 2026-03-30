@@ -63,7 +63,7 @@ public struct CrowdQExchange {
         self.argument = argument
         self.payload = payload
     }
-
+    
     func byteArray(from value: Int32) -> [UInt8]  {
         var bytes = withUnsafeBytes(of: value.bigEndian, Array.init)
         bytes.removeFirst() // Big endian, network byte order

@@ -1,3 +1,10 @@
+//
+//  BridgeObserver.swift
+//  CrowdQ Live
+//
+//  Created by Patrick Miller on 1/26/26.
+//
+
 import UIKit
 import Foundation
 import CoreBluetooth

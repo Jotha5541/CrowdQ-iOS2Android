@@ -1,9 +1,6 @@
 //
 //  BLEManager.swift
 //  CrowdQ Stage
-//
-//  Created by Patrick Miller on 1/17/26.
-//
 
 //  The first 3 binary bytes (4 Base64 chars) are tSSSSS (4 bits of tag, 20 bits of sequence)
 // For show, the next binary bytes are two bytes of packet number and two bytes of count followed by
