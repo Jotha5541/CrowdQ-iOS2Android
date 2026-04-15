@@ -3,6 +3,14 @@ package icu.luxcedia.crowdq.stage;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattServer;
+import android.bluetooth.BluetoothGattServerCallback;
+import android.bluetooth.BluetoothGattService;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.AdvertiseCallback;
 import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
@@ -18,14 +26,19 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.Log;
+
 import androidx.core.content.ContextCompat;
 
 import icu.luxcedia.crowdq.exchange.CrowdQExchange;
 import icu.luxcedia.crowdq.exchange.CrowdQExchangeTag;
-//import icu.luxcedia.crowdq.core.threading.SerialExecutor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BLEManager {
     private static final String TAG = "BLEManager";
@@ -66,6 +79,13 @@ public class BLEManager {
     private AdvertiseCallback advertiseCallback;
     private ScanCallback scanCallback;
 
+    /* GATT Implementation */
+    private final UUID charUuid = UUID.fromString("11112222-3333-4444-5555-666677778888");
+    private BluetoothManager bluetoothManager;
+    private BluetoothGattServer gattServer;
+    private BluetoothGattCharacteristic exchangeCharacteristic;
+    private final Set<BluetoothDevice> connectedClients = new HashSet<>();
+
     public BLEManager(ParcelUuid broadcastUuid, Parcel sensorUuid, SensorCallback callback) {
         this.broadcastUuid = broadcastUuid;
         this.sensorUuid = sensorUuid;
@@ -75,21 +95,89 @@ public class BLEManager {
         this.advertiser = (adapter != null) ? adapter.getBluetoothLeAdvertiser() : null;
     }
 
+
+    /* GATT Server Setup */
+    @SuppressLint("MissingPermission")
+    public void openGattServer(Context context) {
+        if (gattServer != null) return;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "Missing BLUETOOTH_CONNECT permission for GATT Server");
+            return;
+        }
+
+        bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+        if (bluetoothManager == null) return;
+
+        gattServer = bluetoothManager.openGattServer(context, gattServerCallback);
+        if (gattServer == null) return;
+
+        exchangeCharacteristic = new BluetoothGattCharacteristic(
+                charUuid,
+                BluetoothGattCharacteristic.PROPERTY_READ | BluetoothGattCharacteristic.PROPERTY_NOTIFY,
+                BluetoothGattCharacteristic.PERMISSION_READ
+        );
+
+        BluetoothGattService service = new BluetoothGattService(
+                broadcastUuid.getUuid(),
+                BluetoothGattService.SERVICE_TYPE_PRIMARY
+        );
+        service.addCharacteristic(exchangeCharacteristic);
+
+        gattServer.addService(service);
+        Log.d(TAG, "GATT Server Opened");
+    }
+
+    private final BluetoothGattServerCallback gattServerCallback = new BluetoothGattServerCallback() {
+        @Override
+        public void onConnectionStateChange(BluetoothDevice device, int status, int newState) {
+            serialQueue.execute(() -> {
+                if (newState == BluetoothProfile.STATE_CONNECTED) {
+                    connectedClients.add(device);
+                }
+                else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                    connectedClients.remove(device);
+                }
+            });
+        }
+
+        @SuppressLint("MissingPermission")
+        @Override
+        public void onCharacteristicReadRequest(BluetoothDevice device, int requestId, int offset, BluetoothGattCharacteristic characteristic) {
+            if (charUuid.equals(characteristic.getUuid())) {
+                gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, characteristic.getValue();
+            }
+            else {
+                gattServer.sendResponse(device, requestid, BluetoothGatt.GATT_FAILURE, 0, null);
+            }
+        }
+    };
+
+    /* Broadcast and Notify GATT */
     public void enqueue(Context context, CrowdQExchangeTag tag, int arg, String payload) {
         serialQueue.execute(() -> {
             CrowdQExchange packet = new CrowdQExchange(sequence++, tag, arg, payload);
             String packedString = packet.pack();
-
-            // Optimization: Encode as ASCII/UTF-8 bytes as requested
             byte[] packetBytes = packedString.getBytes(StandardCharsets.US_ASCII);
 
-            // TODO: Add fragmentation for GATT if packetBytes.length > 31 bytes
+            // Optimization: Notifying GATT after larger package load
+            if (gattServer != null && exchangeCharacteristic != null) {
+                exchangeCharacteristic.setValue(packetBytes);
+                for (BluetoothDevice client : connectedClients) {
+                    gattServer.notifyCharacteristicChanged(client);
+                }
+            }
+
+            // Package Fragmentation and Size check
+            if (packetBytes.length > 24) {
+                Log.w(TAG, "Payload exceeds Advertising limit. Switching to GATT");
+                return;
+            }
 
             // Optimization: addServiceData() checks Android 12+ runtime permissions
             // Optimization: Packet service data, not local name
             AdvertiseData adData = new AdvertiseData.Builder()
                     .addServiceUuid(broadcastUuid)
-                    // Pack data in Service Data rather than Local Name
                     .addServiceData(broadcastUuid, packetBytes)
                     .build();
 
@@ -136,7 +224,7 @@ public class BLEManager {
         }
     }
 
-    // Scanning
+    /* Scanning */
     @SuppressLint("MissingPermission")
     private void startScanning(Context context) {
         if (adapter == null || !hasBlePermissions(context, Manifest.permission.BLUETOOTH_SCAN)) return;
@@ -170,10 +258,9 @@ public class BLEManager {
                     Log.d(TAG, "Sensor Count: " + count + " Name: " + name);
                     count++;
 
-                    // Serial queue callback
                     serialQueue.execute(() -> {
                         callback.onSensorDataReceived(name);
-                    })
+                    });
                 }
             }
         };
@@ -200,5 +287,12 @@ public class BLEManager {
 
     public void destroy() {
         serialQueue.shutdown();
+
+        if (gattServer != null) {
+            @SuppressLint("MissingPermission")
+            BluetoothManager bm = gattServer;
+            gattServer.close();
+            gattServer = null;
+        }
     }
 }

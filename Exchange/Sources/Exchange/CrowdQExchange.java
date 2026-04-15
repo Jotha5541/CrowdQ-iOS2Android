@@ -17,7 +17,7 @@ public class CrowdQExchange {
         B64_INV['='] = 0;
     }
 
-    public CrowdQExchange() {}
+    public CrowdQExchange() {} // Empty constructor
 
     public CrowdQExchange(int sequence, CrowdQExchangeTag tag, int argument, String payload) {
         this.sequence = sequence;
