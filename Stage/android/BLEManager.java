@@ -58,7 +58,6 @@ public class BLEManager {
     public interface SensorCallback {
         void onSensorDataReceived(String decodedData);
     }
-    private final BluetoothLeAdvertiser advertiser;
     private AdvertiseCallback currentCallback;
     private final ParcelUuid broadcastUuid;
     private final ParcelUuid sensorUuid;
@@ -91,7 +90,7 @@ public class BLEManager {
         this.sensorUuid = sensorUuid;
         this.callback = callback;
 
-        this.adapter = BlueToothAdapter.getDefaultAdapter();
+        this.adapter = BluetoothAdapter.getDefaultAdapter();
         this.advertiser = (adapter != null) ? adapter.getBluetoothLeAdvertiser() : null;
     }
 
@@ -145,10 +144,10 @@ public class BLEManager {
         @Override
         public void onCharacteristicReadRequest(BluetoothDevice device, int requestId, int offset, BluetoothGattCharacteristic characteristic) {
             if (charUuid.equals(characteristic.getUuid())) {
-                gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, characteristic.getValue();
+                gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS, offset, characteristic.getValue());
             }
             else {
-                gattServer.sendResponse(device, requestid, BluetoothGatt.GATT_FAILURE, 0, null);
+                gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_FAILURE, 0, null);
             }
         }
     };
@@ -290,7 +289,7 @@ public class BLEManager {
 
         if (gattServer != null) {
             @SuppressLint("MissingPermission")
-            BluetoothManager bm = gattServer;
+//            BluetoothManager bm = gattServer;
             gattServer.close();
             gattServer = null;
         }

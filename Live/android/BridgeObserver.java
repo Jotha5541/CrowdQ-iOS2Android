@@ -68,7 +68,7 @@ public class BridgeObserver {
         scanCallback = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
-                handleScanResult(result);
+                handleExchange(result);
             }
         };
         @SuppressLint("MissingPermission")
@@ -92,7 +92,7 @@ public class BridgeObserver {
         byte[] packetBytes = record.getServiceData(new ParcelUuid(phonesUuid));
         if (packetBytes == null || packetBytes.length < 8) return;
 
-        // Optimization: Deny byte arrays
+        // Optimization: Uses ASCII
         String packet = new String(packetBytes, StandardCharsets.US_ASCII);
         CrowdQExchange exchange = CrowdQExchange.parse(packet);
         if (exchange == null) return;
