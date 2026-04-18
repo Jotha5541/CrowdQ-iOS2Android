@@ -1,4 +1,4 @@
-package icu.luxcedia.crowdq.stage;
+package stage;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

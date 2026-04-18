@@ -16,8 +16,8 @@ import android.os.ParcelUuid;
 import android.util.Log;
 import androidx.core.content.ContextCompat;
 
-import icu.luxcedia.crowdq.core.threading.SerialExecutor;
-import icu.luxcedia.crowdq.exchange.CrowdQExchange;
+//import icu.luxcedia.crowdq.core.threading.SerialExecutor;
+import exchange.CrowdQExchange;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;

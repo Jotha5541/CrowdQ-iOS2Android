@@ -1,4 +1,4 @@
-package icu.luxcedia.crowdq.exchange;
+package exchange;
 
 import java.util.Base64;
 

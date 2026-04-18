@@ -1,4 +1,4 @@
-package icu.luxcedia.crowdq.live.controller;
+package live;
 
 import android.graphics.Bitmap;
 

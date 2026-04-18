@@ -1,7 +1,7 @@
-package icu.luxcedia.crowdq.live.controller;
+package live;
 
-import icu.luxcedia.crowdq.exchange.CrowdQExchange;
-import icu.luxcedia.crowdq.exchange.CrowdQExchangeTag;
+import exchange.CrowdQExchange;
+import exchange.CrowdQExchangeTag;
 
 public class LiveCoordinator {
     public interface CommandSink {

@@ -1,4 +1,4 @@
-package icu.luxcedia.crowdq.exchange;
+package exchange;
 
 public enum CrowdQExchangeTag {
     LOAD(0),

@@ -1,4 +1,4 @@
-package icu.luxcedia.crowdq.live;
+package live;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="abcbde3f-4e00-4244-884a-b3943c2f98ef" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Stage/android/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Exchange/Sources/Exchange/CrowdQExchange.java" beforeDir="false" afterPath="$PROJECT_DIR$/Exchange/Sources/src/CrowdQExchange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Exchange/Sources/Exchange/CrowdQExchangeTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/Exchange/Sources/src/CrowdQExchangeTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Exchange/Sources/Exchange/Exchange.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Exchange/Sources/Exchange.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/BridgeObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Live/android/src/BridgeObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Live/android/src/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/CrowdQLive/CrowdQLive/BridgeObserver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/CrowdQLive/CrowdQLive/LiveCoordinator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Live/android/src/LiveCoordinator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/MediaEffectsPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/Live/android/src/MediaEffectsPipeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/tbd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/BLEManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/BLEManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/tbd" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3BXZ1XplhAKPkxEwkNm6gfpEqJP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/joseph/Documents/Luxcedia/CrowdQ",
+    "settings.editor.selected.configurable": "preferences.keymap"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/CrowdQ-main/Exchange/Sources/Exchange" />
+      <recent name="$PROJECT_DIR$/CrowdQ-main/Exchange/Sources" />
+      <recent name="$PROJECT_DIR$/CrowdQ-main/Exchange/Sources/Exchange/src" />
+      <recent name="$PROJECT_DIR$/CrowdQ-main/Live/android/src" />
+      <recent name="$PROJECT_DIR$/CrowdQ-main/Stage/android/src" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="abcbde3f-4e00-4244-884a-b3943c2f98ef" name="Changes" comment="" />
+      <created>1774637162654</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1774637162654</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.swift" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
