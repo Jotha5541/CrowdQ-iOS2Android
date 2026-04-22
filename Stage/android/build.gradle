@@ -1,0 +1,40 @@
+
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'stage'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "crowdq.stage"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = [
+                    'src',
+                    '../../Exchange/Sources/src',
+                    '../../Live/android/src',
+                    '../../Core/Threading'
+            ]
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+}

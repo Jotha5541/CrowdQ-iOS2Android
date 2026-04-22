@@ -146,6 +146,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        // Implementation for attaching Page1, Page2, Page3 fragments to
+        ViewPager2 pager = findViewById(R.id.pager);
+
+        PagerAdapter adapter = new PagerAdapter(this);
+
+        adapter.addPage(new Page1Fragment());
+        adapter.addPage(new SettingsFragment());
+        adapter.addPage(new ButtonGridFragment());
+
+        pager.setAdapter(adapter);
     }
 }
