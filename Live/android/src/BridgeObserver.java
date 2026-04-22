@@ -1,4 +1,4 @@
-package icu.luxcedia.crowdq.live;
+package live;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,7 +16,7 @@ import android.os.ParcelUuid;
 import android.util.Log;
 import androidx.core.content.ContextCompat;
 
-//import icu.luxcedia.crowdq.core.threading.SerialExecutor;
+
 import exchange.CrowdQExchange;
 
 import java.nio.charset.StandardCharsets;
