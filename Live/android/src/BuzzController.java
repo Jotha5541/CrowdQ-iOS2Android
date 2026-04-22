@@ -9,7 +9,7 @@ import android.os.VibratorManager;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-    public class BuzzController {
+public class BuzzController {
     /* Single-thread executor for queue */
     private final ExecutorService workQueue = Executors.newSingleThreadExecutor();
     private final Context context;
@@ -73,8 +73,7 @@ import java.util.concurrent.Executors;
         // Equivalent to Thread.sleep(interval);
         try {
             Thread.sleep(duration);
-        }
-        catch (InterruptedExecution e){
+        } catch (InterruptedExecution e) {
             Thread.currentThread().interrupt();
         }
     }

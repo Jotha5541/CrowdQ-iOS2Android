@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "stage.app-mergeReleaseResources-20:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/Users/joseph/.gradle/caches/9.4.1/transforms/5e8ff3e02280fbddd53927cab7463fc6/transformed/appcompat-1.6.1/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}
