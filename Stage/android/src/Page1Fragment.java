@@ -56,4 +56,5 @@ public class Page1Fragment extends Fragment {
                     "Swipe left to see the show play board.\n";
 
 
+
 }
