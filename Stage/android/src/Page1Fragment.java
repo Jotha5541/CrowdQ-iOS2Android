@@ -55,5 +55,159 @@ public class Page1Fragment extends Fragment {
             "You now have access to all the free shows.\n" +
                     "Swipe left to see the show play board.\n";
 
+    // View Buttons
+    private TextView instructions;
+    private EditText emailTextField;
+    private Button verifyButton;
+    private Button unsubscribeButton;
 
+
+    private MainActivity main;
+
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    public void setMain(MainActivity main) {
+        this.main = main;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater infalter, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_page1, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        instructions = view.findViewById(R.id.instructions);
+        emailTextField = view.findViewById(R.id.emailTextField);
+        verifyButton = view.findViewById(R.id.verifyButton);
+        unsubscribeButton = view.findViewById(R.id.unsubscribeButton);
+
+        instructions.setText(BLANK_INSTRUCTIONS);
+
+        // Status button verify
+        verifyButton.setOnClickListener(v -> {
+            String email = emailTextField.getText().toString();
+            verifyEmail(email);
+        });
+
+        unsubscribeButton.setOnClickListener(v -> unsubscribe());
+
+        emailTextField.setOnEditorActionListener((v, actionId, event) -> {
+            String email = emailTextField.getText().toString();
+            newEmail(email);
+            return true;
+        });
+
+        // Loading saved email
+        SharedPreferences prefs = requiredActivity().getSharedPreferences("CrowdQPrefs", 0);
+        String savedEmail = prefs.getString("email", "");
+        if (!savedEmail.isEmpty()) {
+            emailTextField.setText(savedEmail);
+            verifyEmail(savedEmail);
+        }
+
+        boolean flagged = prefs.getBoolean("flagged", false);
+        if (!flagged) {
+            prefs.edit().putBoolean("flagged", true).apply();
+            new AlertDialog.Builder(requireContext())
+                    .setMessage(ONE_TIME_MESSAGE)
+                    .setPositiveButton("Dismiss", null)
+                    .show();
+        }
+    }
+
+    private void newEmail(String email) {
+        mainHandler.post(() -> instructions.setText(ASK_TO_VERIFY_EMAIL));
+        SharedPReferences prefs = requireActivity().getSharedPreferences("CrowdQPrefs", 0);
+        prefs.edit().putString("email", email).apply();
+    }
+
+    private void verifyEmail(String email) {
+        mainHandler.post(() -> instructions.setText("verifying email...."));
+
+        executor.execute(() -> {
+            try {
+                String deviceUUID = android.provider.Settings.Secure.getString(
+                        requireActivity().getContentResolver(),
+                        android.provider.Settings.Secure.ANDROID_ID
+                );
+
+                URL url = new URL("https://luxcedia.icu/cgi-bin/verifyemail");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String body = "id=" + email + "&uuid=" + deviceUUID;
+                OutputStream os = conn.getOutputStream();
+                os.write(body.getBytes());
+                os.flush();
+
+                int status = conn.getResponseCode();
+                BufferReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                String answer = response.toString();
+                mainHandler.post(() -> {
+                    if (status != 200) {
+                        instructions.setText("Problem with verify:\n\n" + answer);
+                    }
+                    else {
+                        instructions.setText(EMAIL_IS_VERIFIED + "\n" + answer);
+                    }
+                });
+            } catch (Exception e) {
+                mainHandler.post(() -> instructions.setText("Error: " + e.getMessage()));
+            }
+        });
+    }
+
+    private void unsubscribe() {
+        String email = emailTextField.getText().toString();
+        executor.execute(() -> {
+            try {
+                URL url = new URL("https://luxcedia.icu/cgi-bin/unsubscribe");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String body = "id=" + email;
+                OutputStream os = conn.getOutputStream();
+                os.write(body.getBytes());
+                os.flush();
+
+                int status = conn.getResponseCode();
+                BufferedReader reader = new BufferedReader(new INputStreamReader(conn.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                String answer = response.toString();
+                mainHandler.post(() -> {
+                    if (status != 200) {
+                        instructions.setText("Problem with unsubscribe:\n\n" + answer);
+                    }
+                    else {
+                        instructions.setText(answer);
+                        emailTextField.setText("");
+                        requireActivity().getSharedPreferences("CrowdQPrefs", 0)
+                                .edit().putString("email", "").apply();
+                    }
+                });
+            } catch (Exception e) {
+                mainHandler.post(() -> instructions.setText("Error: " + e.getMessage()));
+            }
+        });
+    }
 }
