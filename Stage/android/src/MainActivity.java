@@ -1,5 +1,5 @@
 // ViewController.swift
-
+// SceneDelegate.swift
 package stage;
 
 import android.content.SharedPreferences;
