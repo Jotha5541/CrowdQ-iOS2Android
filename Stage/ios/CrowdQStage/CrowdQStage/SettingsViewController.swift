@@ -46,14 +46,14 @@ class ContinuousControlViewController: UIViewController {
 
     private func setupLayout() {
 
-        
+
         // Adding the label to the stack for feedback
         let stackView = UIStackView(arrangedSubviews: [statusSwitch, rangeSlider, valueLabel])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 15
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         view.addSubview(stackView)
 
         NSLayoutConstraint.activate([
@@ -92,7 +92,7 @@ class SettingsViewController: UIViewController {
         label.backgroundColor = .systemBackground
         return label
     }()
-    
+
     // Three-way selection (Radio Button style)
     private let hubSegmentedControl: UISegmentedControl = {
         let items = ["None", "microHub", "Hub"]
@@ -120,7 +120,7 @@ class SettingsViewController: UIViewController {
         sw.isOn = false
         return sw
     }()
-    
+
     let rangeSlider: UISlider = {
             let slider = UISlider()
             slider.minimumValue = 0
@@ -129,7 +129,7 @@ class SettingsViewController: UIViewController {
             slider.isContinuous = true // Ensures events fire while sliding
             return slider
         }()
-    
+
     let sliderLabel : UILabel = {
         let label = UILabel()
         label.text = "1.0"
@@ -153,7 +153,7 @@ class SettingsViewController: UIViewController {
         tx.textColor = .label
         return tx
     }()
-    
+
     var timer: Timer?
     var showTitle: String?
     override func viewDidLoad() {
@@ -165,7 +165,7 @@ class SettingsViewController: UIViewController {
         hubSegmentedControl.addTarget(self, action: #selector(hubChanged(_:)), for: .valueChanged)
         sensorSwitch.addTarget(self, action: #selector(sensorSwitchChanged(_:)), for: .valueChanged)
         rangeSlider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
-        
+
         // We want to periodically send a "show" command since people will be adding phones
         // to the performance
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { [weak self] timer in
@@ -185,24 +185,24 @@ class SettingsViewController: UIViewController {
         background.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(background)
         view.sendSubviewToBack(background)
-        
+
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
-        
+
         let sensors : UIStackView = {
             let row = UIStackView()
             row.axis = .horizontal
             row.alignment = .fill
             row.spacing = 15
-                        
+
             row.addArrangedSubview(sensorSwitch)
             row.addArrangedSubview(sliderLabel)
             row.addArrangedSubview(rangeSlider)
 
             return row
         }()
-        
+
         let stackView = UIStackView(arrangedSubviews: [
             mode,
             UILabel(),
@@ -214,7 +214,7 @@ class SettingsViewController: UIViewController {
             UILabel(),
             createLabel(text: "Information"), information
         ])
-        
+
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -233,18 +233,18 @@ class SettingsViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
+
             // StackView anchors to ScrollView's Content Guide
             stackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 120),
             stackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20),
             stackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor, constant: -20),
-            
+
             // Critical: Ensure the StackView width matches the ScrollView width (minus padding)
             stackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor, constant: -40)
         ])
     }
-    
+
     var active = false
     private func setupMenu(_ choices : [String], overwrite : Bool) {
         print("setup",choices,active,overwrite)
@@ -289,7 +289,7 @@ class SettingsViewController: UIViewController {
             self.mode.text = "Free show mode"
             self.information.text = "Searching available shows"
         }
-        
+
         // Start downloading the list of free shows
         restAPI("https://luxcedia.icu/cgi-bin/freeshows",[
             "id" : main?.page1.emailTextField.text ?? "",
@@ -313,29 +313,29 @@ class SettingsViewController: UIViewController {
                 print("Bad fetch",status)
             }
         }
-        
+
     }
-    
+
     func popup(_ message : String) {
         DispatchQueue.main.async {
             // Pop down the old message
             self.alert?.dismiss(animated: false)
-            
+
             self.alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
             self.alert?.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            
+
             if let alert = self.alert {
                 self.present(alert, animated: true, completion: nil)
             }
         }
     }
-    
+
     @objc private func hubChanged(_ sender: UISegmentedControl) {
         let selectedIndex = sender.selectedSegmentIndex
         let selectedTitle = sender.titleForSegment(at: selectedIndex)
-        
+
         print("Selected Segment Index: \(selectedIndex), Title: \(selectedTitle ?? "")")
-        
+
         // Perform your logic here (e.g., updating other UI elements)
         if selectedIndex != 0 {
             popup("hubs are disabled in this early version")
@@ -344,7 +344,7 @@ class SettingsViewController: UIViewController {
             }
         }
     }
-    
+
     @objc private func sensorSwitchChanged(_ sender: UISwitch) {
         if sender.isOn {
             // We can only enable sensors when we have no external hub
@@ -367,7 +367,7 @@ class SettingsViewController: UIViewController {
             main?.bleClient?.listening = false
         }
     }
-    
+
     public var gravityScale : Float = 1.0
     @objc private func sliderChanged(_ sender: UISlider) {
         gravityScale = sender.value

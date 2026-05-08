@@ -22,13 +22,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abcbde3f-4e00-4244-884a-b3943c2f98ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Stage/android/res/layout/scrolling_text_fragment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Stage/android/src/ScrollingFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Stage/android/res/layout/continuous_control_fragment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Stage/android/src/ContinuousScrollFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Stage/android/src/SettingsFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stage/android/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stage/android/src/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stage/android/src/Page1Fragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/Page1Fragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/src/ScrollingFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/ScrollingFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/ios/CrowdQStage/CrowdQStage/SettingsViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/ios/CrowdQStage/CrowdQStage/SettingsViewController.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,12 +375,12 @@
       <map>
         <entry key="crowdq.stage">
           <value>
-            <CheckInfo lastCheckTimestamp="1777924803785" />
+            <CheckInfo lastCheckTimestamp="1778042028649" />
           </value>
         </entry>
         <entry key="crowdq.stage.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1777924803785" />
+            <CheckInfo lastCheckTimestamp="1778042028655" />
           </value>
         </entry>
       </map>
