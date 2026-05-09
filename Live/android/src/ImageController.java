@@ -56,6 +56,10 @@ public class ImageController {
         }
     }
 
+    public void addSyncPoint(Runnable onComplete) {
+        workQueue.execute(onComplete);
+    }
+
     public void shutdown() {
         workQueue.shutdown();
     }

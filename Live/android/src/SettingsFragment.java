@@ -42,6 +42,7 @@ public class SettingsFragment extends Fragment {
         showLabel.setText("-- No Show Loaded --");
     }
 
+
     public void add(String text) {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         String timeString = df.format(new Date());

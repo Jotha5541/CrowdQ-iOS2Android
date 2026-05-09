@@ -77,6 +77,10 @@ public class BuzzController {
         }
     }
 
+    public void addSyncPoint(Runnable onComplete) {
+        workQueue.execute(onComplete);
+    }
+
     public void shutdown() {
         workQueue.shutdown();
     }

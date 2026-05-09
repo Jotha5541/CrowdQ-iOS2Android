@@ -100,6 +100,10 @@ public class SoundController {
         }
     }
 
+    public void addSyncPoint(Runnable onComplete) {
+        workQueue.execute(onComplete);
+    }
+
     public void shutdown() {
         workQueue.shutdown();
         if (audioPlayer != null) {

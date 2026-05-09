@@ -19,7 +19,6 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp">
 
-        <!-- Equivalent to showLabel UILabel -->
         <TextView
             android:id="@+id/showLabel"
             android:layout_width="match_parent"
@@ -31,7 +30,6 @@
             android:background="#F2F2F7"
             android:layout_marginBottom="16dp" />
 
-        <!-- Equivalent to textView UITextView scrollable and read-only -->
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
