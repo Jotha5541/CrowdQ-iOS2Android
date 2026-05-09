@@ -70,12 +70,15 @@ public class BuzzController {
             vibrator.vibrate(effect);
         }
 
-        // Equivalent to Thread.sleep(interval);
         try {
             Thread.sleep(duration);
         } catch (InterruptedExecution e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public void addSyncPoint(Runnable onComplete) {
+        workQueue.execute(onComplete);
     }
 
     public void shutdown() {

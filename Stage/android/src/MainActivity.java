@@ -156,4 +156,9 @@ public class MainActivity extends AppCompatActivity {
 
         pager.setAdapter(adapter);
     }
+
+    public String getEmail() {
+        SharedPreferences prefs = getSharedPreferences("CrowdQPrefs", MODE_PRIVATE);
+        return prefs.getString("email", "");
+    }
 }

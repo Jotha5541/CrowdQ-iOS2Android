@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="hub_options">
+        <item>None</item>
+        <item>microHub</item>
+        <item>Hub</item>
+    </string-array>
+</resources>
