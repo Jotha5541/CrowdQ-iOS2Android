@@ -26,9 +26,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="abcbde3f-4e00-4244-884a-b3943c2f98ef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="abcbde3f-4e00-4244-884a-b3943c2f98ef" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -375,12 +373,12 @@
       <map>
         <entry key="crowdq.stage">
           <value>
-            <CheckInfo lastCheckTimestamp="1778204769133" />
+            <CheckInfo lastCheckTimestamp="1778316859596" />
           </value>
         </entry>
         <entry key="crowdq.stage.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1778204769137" />
+            <CheckInfo lastCheckTimestamp="1778316859616" />
           </value>
         </entry>
       </map>
