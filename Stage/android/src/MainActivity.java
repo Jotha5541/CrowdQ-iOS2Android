@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.crowdq.exchange.CrowdQExchangeTag;
+import exchange.CrowdQExchangeTag;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

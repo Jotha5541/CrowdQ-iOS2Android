@@ -1,0 +1,28 @@
+R_DEF: Internal format may change without notice
+local
+array hub_options
+drawable lighted_stage
+drawable on_stage
+id background
+id emailTextField
+id hubSegmentedControl
+id information
+id instructions
+id modeLabel
+id optionsButton
+id pager
+id rangeSlider
+id scrollView
+id sensorSwitch
+id sliderLabel
+id stackView
+id statusSwitch
+id unsubscribeButton
+id valueLabel
+id verifyButton
+layout activity_main
+layout button_grid_fragment
+layout continuous_control_fragment
+layout page1_fragment
+layout scrolling_text_fragment
+layout settings_fragment

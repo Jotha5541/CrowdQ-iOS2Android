@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "stage.app-debug-25:/layout_scrolling_text_fragment.xml.flat",
+        "source": "stage.app-android-26:/layout/scrolling_text_fragment.xml"
+    },
+    {
+        "merged": "stage.app-debug-25:/layout_activity_main.xml.flat",
+        "source": "stage.app-android-26:/layout/activity_main.xml"
+    },
+    {
+        "merged": "stage.app-debug-25:/drawable_lighted_stage.png.flat",
+        "source": "stage.app-android-26:/drawable/lighted_stage.png"
+    },
+    {
+        "merged": "stage.app-debug-25:/drawable_on_stage.png.flat",
+        "source": "stage.app-android-26:/drawable/on_stage.png"
+    },
+    {
+        "merged": "stage.app-debug-25:/layout_continuous_control_fragment.xml.flat",
+        "source": "stage.app-android-26:/layout/continuous_control_fragment.xml"
+    },
+    {
+        "merged": "stage.app-debug-25:/layout_page1_fragment.xml.flat",
+        "source": "stage.app-android-26:/layout/page1_fragment.xml"
+    },
+    {
+        "merged": "stage.app-debug-25:/layout_button_grid_fragment.xml.flat",
+        "source": "stage.app-android-26:/layout/button_grid_fragment.xml"
+    },
+    {
+        "merged": "stage.app-debug-25:/layout_settings_fragment.xml.flat",
+        "source": "stage.app-android-26:/layout/settings_fragment.xml"
+    }
+]
