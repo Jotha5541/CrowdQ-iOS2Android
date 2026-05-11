@@ -14,14 +14,15 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.Log;
+
 import androidx.core.content.ContextCompat;
-
-
-import exchange.CrowdQExchange;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.UUID;
+
+import exchange.CrowdQExchange;
+import threading.SerialExecutor;
 
 public class BridgeObserver {
     private static final String TAG = "BridgeObserver";
@@ -82,7 +83,7 @@ public class BridgeObserver {
         scanner.startScan(Collections.singletonList(filter), settings, scanCallback);
     }
 
-    @SuppressLint("Missing Permission")
+    @SuppressLint("MissingPermission")
     public void stopScan() {
         if (scanner != null && scanCallback != null) {
             if (hasScanPermissions(context)) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/lighted_stage"
+        android:scaleType="centerCrop" />
+
+    <!-- Bouncing guitar icon — equivalent to iconView UIImageView -->
+    <ImageView
+        android:id="@+id/iconView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/guitar_red"
+        android:scaleType="fitCenter"
+        android:visibility="visible" />
+
+</FrameLayout>
