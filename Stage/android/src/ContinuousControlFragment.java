@@ -22,7 +22,7 @@ public class ContinuousControlFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_continuous_control, container, false);
+        return inflater.inflate(R.layout.continuous_control_fragment, container, false);
     }
 
     @Override
