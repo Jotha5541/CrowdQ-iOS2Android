@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,7 +44,7 @@ public class SettingsFragment extends Fragment {
     private MainActivity main;
 
     private TextView modeLabel;
-    private TextView information;
+    private EditText information;
     private Switch sensorSwitch;
     private SeekBar rangeSlider;
     private TextView sliderLabel;
@@ -69,7 +70,7 @@ public class SettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.settings_fragment, container, false);
     }
 
     @Override
@@ -257,15 +258,15 @@ public class SettingsFragment extends Fragment {
         if (isOn) {
             int selectedIndex = hubSegmentedControl.getSelectedItemPosition();
             if (selectedIndex == 0) {
-                if (main != null) main.bleClient.setListening(requireContext(), true);
+                if (main != null) main.bleClient.setListening(true);
                 mainHandler.post(() -> information.setText("Listening for basic sensors"));
             } else {
                 popup("the selected hub is handling sensors");
-                if (main != null) main.bleClient.setListening(requireContext(), false);
+                if (main != null) main.bleClient.setListening(false);
                 mainHandler.post(() -> sensorSwitch.setChecked(false));
             }
         } else {
-            if (main != null) main.bleClient.setListening(requireContext(), false);
+            if (main != null) main.bleClient.setListening(false);
         }
     }
 

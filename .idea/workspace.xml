@@ -37,7 +37,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abcbde3f-4e00-4244-884a-b3943c2f98ef" name="Changes" comment="">
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/src/ContinuousScrollFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/ContinuousControlFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/src/ScrollingFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/ScrollingTextFragment.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.gradle/9.4.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.4.1/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.4.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.4.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.4.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/src/BridgeObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Live/android/src/BridgeObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Live/android/src/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Live/android/src/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/src/BLEManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/BLEManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/src/ContinuousScrollFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/ContinuousControlFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/src/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stage/android/src/ScrollingFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Stage/android/src/ScrollingTextFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+>>>>>>> 472b5f835c3b9bdced7f5614299f2760a03beb3b
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,8 +211,6 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <option name="DEBUGGER_TYPE" value="Auto" />
       <Auto>
         <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
@@ -253,8 +279,6 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <option name="DEBUGGER_TYPE" value="Auto" />
       <Auto>
         <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
@@ -397,12 +421,20 @@
       <map>
         <entry key="crowdq.stage">
           <value>
+<<<<<<< HEAD
+            <CheckInfo lastCheckTimestamp="1778386019454" />
+=======
             <CheckInfo lastCheckTimestamp="1778465246259" />
+>>>>>>> 472b5f835c3b9bdced7f5614299f2760a03beb3b
           </value>
         </entry>
         <entry key="crowdq.stage.test">
           <value>
+<<<<<<< HEAD
+            <CheckInfo lastCheckTimestamp="1778386019456" />
+=======
             <CheckInfo lastCheckTimestamp="1778465246260" />
+>>>>>>> 472b5f835c3b9bdced7f5614299f2760a03beb3b
           </value>
         </entry>
       </map>

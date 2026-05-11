@@ -52,7 +52,7 @@ public class ButtonGridFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_button_grid, container, false);
+        return inflater.inflate(R.layout.button_grid_fragment, container, false);
     }
 
     @Override

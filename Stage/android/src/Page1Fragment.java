@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -73,8 +75,8 @@ public class Page1Fragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater infalter, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_page1, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.page1_fragment, container, false);
     }
 
     @Override
@@ -103,7 +105,7 @@ public class Page1Fragment extends Fragment {
         });
 
         // Loading saved email
-        SharedPreferences prefs = requiredActivity().getSharedPreferences("CrowdQPrefs", 0);
+        SharedPreferences prefs = requireActivity().getSharedPreferences("CrowdQPrefs", 0);
         String savedEmail = prefs.getString("email", "");
         if (!savedEmail.isEmpty()) {
             emailTextField.setText(savedEmail);
@@ -122,7 +124,7 @@ public class Page1Fragment extends Fragment {
 
     private void newEmail(String email) {
         mainHandler.post(() -> instructions.setText(ASK_TO_VERIFY_EMAIL));
-        SharedPReferences prefs = requireActivity().getSharedPreferences("CrowdQPrefs", 0);
+        SharedPreferences prefs = requireActivity().getSharedPreferences("CrowdQPrefs", 0);
         prefs.edit().putString("email", email).apply();
     }
 
@@ -148,7 +150,7 @@ public class Page1Fragment extends Fragment {
                 os.flush();
 
                 int status = conn.getResponseCode();
-                BufferReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -186,7 +188,7 @@ public class Page1Fragment extends Fragment {
                 os.flush();
 
                 int status = conn.getResponseCode();
-                BufferedReader reader = new BufferedReader(new INputStreamReader(conn.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String line;
                 while((line = reader.readLine()) != null) {

@@ -3,137 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Background image — equivalent to UIImageView on-stage sent to back -->
+    <!-- Background image — equivalent to UIImageView lighted-stage sent to back -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/on_stage"
+        android:src="@drawable/lighted_stage"
         android:scaleType="centerCrop" />
 
-    <!-- Scrollable content — equivalent to UIScrollView + UIStackView -->
-    <ScrollView
+    <!-- Equivalent to UIStackView vertical: showLabel + textView -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/showLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="120dp"
-            android:paddingBottom="20dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
+            android:text="-- no show loaded --"
+            android:textSize="35sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="#F2F2F7"
+            android:layout_marginBottom="16dp" />
 
-            <!-- Equivalent to mode UILabel -->
-            <TextView
-                android:id="@+id/modeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Demo mode"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:background="#F2F2F7"
+            android:scrollbars="vertical"
+            android:focusable="false"
+            android:clickable="false" />
 
-            <!-- Hub Type label -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hub Type"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Equivalent to UISegmentedControl — None/microHub/Hub -->
-            <Spinner
-                android:id="@+id/hubSegmentedControl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/hub_options"
-                android:layout_marginBottom="20dp" />
-
-            <!-- Sensors label -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sensors"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Equivalent to sensors UIStackView: switch + label + slider -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <Switch
-                    android:id="@+id/sensorSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/sliderLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1.0G"
-                    android:textSize="18sp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp" />
-
-                <SeekBar
-                    android:id="@+id/rangeSlider"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:max="200"
-                    android:progress="100" />
-
-            </LinearLayout>
-
-            <!-- Show configuration label -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Show configuration"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Equivalent to optionsButton UIButton with UIMenu -->
-            <Button
-                android:id="@+id/optionsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select show to go live"
-                android:layout_marginBottom="20dp" />
-
-            <!-- Information label -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Information"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Equivalent to information UITextField -->
-            <TextView
-                android:id="@+id/information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Select a show"
-                android:textSize="24sp"
-                android:padding="8dp"
-                android:background="#FFFFFF" />
-
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>

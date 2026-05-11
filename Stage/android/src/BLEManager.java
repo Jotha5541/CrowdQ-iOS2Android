@@ -153,6 +153,7 @@ public class BLEManager {
     };
 
     /* Broadcast and Notify GATT */
+    @SuppressLint("MissingPermission")
     public void enqueue(Context context, CrowdQExchangeTag tag, int arg, String payload) {
         serialQueue.execute(() -> {
             CrowdQExchange packet = new CrowdQExchange(sequence++, tag, arg, payload);
@@ -163,7 +164,7 @@ public class BLEManager {
             if (gattServer != null && exchangeCharacteristic != null) {
                 exchangeCharacteristic.setValue(packetBytes);
                 for (BluetoothDevice client : connectedClients) {
-                    gattServer.notifyCharacteristicChanged(client);
+                    gattServer.notifyCharacteristicChanged(client, exchangeCharacteristic, false);
                 }
             }
 

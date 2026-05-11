@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private BLEManager bleClient;
+    public BLEManager bleClient;
     private Direction lastDirection = Direction.NONE;
     private String deviceUUID;
 
@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Initializes BLE Manager
-        bleClient = new BLEManager(phonesUUID, sensorUUID, this::processTelemetry);
+//        bleClient = new BLEManager(phonesUUID, sensorUUID, this::processTelemetry);
+        bleClient = new BLEManager(phonesUUID, sensorUUID, data -> processTelemetry(data.getBytes()));
 
         // Setup UI (Pager logic)
         setupViewPager();
@@ -155,6 +156,18 @@ public class MainActivity extends AppCompatActivity {
         adapter.addPage(new ButtonGridFragment());
 
         pager.setAdapter(adapter);
+    }
+
+    public void setListening (boolean listening) {
+        if (bleClient != null) {
+            bleClient.setListening(this, listening);
+        }
+    }
+
+    public void enqueue(CrowdQExchangeTag tag, int arg, String payload) {
+        if (bleClient != null) {
+            bleClient.enqueue(this, tag, arg, payload);
+        }
     }
 
     public String getEmail() {

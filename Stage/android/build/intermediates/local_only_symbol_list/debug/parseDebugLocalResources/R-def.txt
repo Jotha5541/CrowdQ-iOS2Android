@@ -1,28 +1,30 @@
 R_DEF: Internal format may change without notice
 local
 array hub_options
+drawable guitar_red
 drawable lighted_stage
+drawable live_splash
 drawable on_stage
+id aboutText
 id background
 id emailTextField
-id hubSegmentedControl
-id information
+id iconView
 id instructions
-id modeLabel
-id optionsButton
 id pager
 id rangeSlider
 id scrollView
-id sensorSwitch
-id sliderLabel
+id showLabel
 id stackView
 id statusSwitch
+id textView
 id unsubscribeButton
 id valueLabel
 id verifyButton
+layout about_fragment
 layout activity_main
 layout button_grid_fragment
 layout continuous_control_fragment
 layout page1_fragment
+layout primary_fragments
 layout scrolling_text_fragment
 layout settings_fragment
