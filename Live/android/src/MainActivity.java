@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
     @Override
     protected void onPause() {
         super.onPause();
-        observer.stopScan();
+        observer.stopScan(this);
     }
 
     @Override

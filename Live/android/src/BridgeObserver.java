@@ -48,6 +48,7 @@ public class BridgeObserver {
         this.listener = listener;
     }
 
+    @SuppressLint("MissingPermission")
     public void startScan(Context context) {
         if (!hasScanPermissions(context)) {
             Log.e(TAG, "Missing Bluetooth Scan permissions.");
@@ -60,7 +61,13 @@ public class BridgeObserver {
         scanner = adapter.getBluetoothLeScanner();
         if (scanner == null) return;
 
+        // Only receiving app packets
         ScanFilter filter = new ScanFilter.Builder()
+                .setServiceUuid(new ParceUuid(phonesUuid))
+                .build();
+
+        // Low latency, no delay
+        ScanSettings settings = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                 .setReportDelay(0L)
                 .build();
@@ -71,14 +78,16 @@ public class BridgeObserver {
                 handleExchange(result);
             }
         };
-        @SuppressLint("MissingPermission")
+
         scanner.startScan(Collections.singletonList(filter), settings, scanCallback);
     }
 
+    @SuppressLint("Missing Permission")
     public void stopScan() {
         if (scanner != null && scanCallback != null) {
-            @SuppressLint("Missing Permission")
-            scanner.stopScan(scanCallback);
+            if (hasScanPermissions(context)) {
+                scanner.stopScan(scanCallback);
+            }
         }
         serialExecutor.shutdown();
     }

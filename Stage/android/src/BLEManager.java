@@ -29,8 +29,8 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
-import icu.luxcedia.crowdq.exchange.CrowdQExchange;
-import icu.luxcedia.crowdq.exchange.CrowdQExchangeTag;
+import exchange.CrowdQExchange;
+import exchange.CrowdQExchangeTag;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
@@ -85,7 +85,7 @@ public class BLEManager {
     private BluetoothGattCharacteristic exchangeCharacteristic;
     private final Set<BluetoothDevice> connectedClients = new HashSet<>();
 
-    public BLEManager(ParcelUuid broadcastUuid, Parcel sensorUuid, SensorCallback callback) {
+    public BLEManager(ParcelUuid broadcastUuid, ParcelUuid sensorUuid, SensorCallback callback) {
         this.broadcastUuid = broadcastUuid;
         this.sensorUuid = sensorUuid;
         this.callback = callback;
@@ -284,12 +284,11 @@ public class BLEManager {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    @SuppressLint("Missing Permission")
     public void destroy() {
         serialQueue.shutdown();
 
         if (gattServer != null) {
-            @SuppressLint("MissingPermission")
-//            BluetoothManager bm = gattServer;
             gattServer.close();
             gattServer = null;
         }
