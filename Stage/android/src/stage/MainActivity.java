@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.content.pm.PackageManager;
 import android.Manifest;
@@ -87,10 +88,11 @@ public class MainActivity extends AppCompatActivity {
         // Initializes BLE Manager
         bleClient = new BLEManager(phonesUUID, sensorUUID, data -> processTelemetry(data.getBytes()));
 
-//        requestBlePermissions();
-        findViewById(android.R.id.content).post(this::requestBlePermissions);
-        // Setup UI (Pager logic)
-        setupViewPager();
+        findViewById(android.R.id.content).post(() -> {
+            setupViewPager();
+            requestBlePermissions();
+            findViewById(R.id.loadingIndicator).setVisibility(View.GONE);
+        });
     }
 
     @Override

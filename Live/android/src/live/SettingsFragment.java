@@ -28,7 +28,7 @@ public class SettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.settings_fragment, container, false);
     }
 
     @Override
@@ -44,13 +44,13 @@ public class SettingsFragment extends Fragment {
         showLabel.setText("-- No Show Loaded --");
     }
 
-
     public void add(String text) {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         String timeString = df.format(new Date());
         String info = "\n" + timeString + " - " + text;
 
         mainHandler.postDelayed(() -> {
+            if (textView == null) return;
             textView.append(info);
 
             int scrollAmt = textView.getLayout() != null
@@ -63,6 +63,9 @@ public class SettingsFragment extends Fragment {
     }
 
     public void setShowName(String name) {
-        mainHandler.post(() -> showLabel.setText(name));
+        mainHandler.post(() -> {
+            if (showLabel == null) return;
+            showLabel.setText(name);
+        });
     }
 }

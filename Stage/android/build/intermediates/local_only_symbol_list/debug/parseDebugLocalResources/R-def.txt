@@ -9,6 +9,7 @@ id emailTextField
 id hubSegmentedControl
 id information
 id instructions
+id loadingIndicator
 id modeLabel
 id optionsButton
 id pager

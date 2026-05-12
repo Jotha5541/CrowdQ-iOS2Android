@@ -21,8 +21,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.UUID;
 
+import threading.SerialExecutor;
 import exchange.CrowdQExchange;
-//import threading.SerialExecutor;
 
 public class BridgeObserver {
     private static final String TAG = "BridgeObserver";
@@ -51,6 +51,9 @@ public class BridgeObserver {
 
     @SuppressLint("MissingPermission")
     public void startScan(Context context) {
+        if (scanCallback != null) {
+            Log.d(TAG, "Already scanning, skipping duplicate start");
+        }
         if (!hasScanPermissions(context)) {
             Log.e(TAG, "Missing Bluetooth Scan permissions.");
             return;

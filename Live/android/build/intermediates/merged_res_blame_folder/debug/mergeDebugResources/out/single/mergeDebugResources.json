@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-debug-25:\\drawable_lighted_stage.png.flat",
+        "source": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-android-26:\\drawable\\lighted_stage.png"
+    },
+    {
+        "merged": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-debug-25:\\layout_about_fragment.xml.flat",
+        "source": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-android-26:\\layout\\about_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-debug-25:\\drawable_guitar_red.png.flat",
+        "source": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-android-26:\\drawable\\guitar_red.png"
+    },
+    {
+        "merged": "live-debug-25:/layout_primary_fragment.xml.flat",
+        "source": "live-android-26:/layout/primary_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-debug-25:\\drawable_live_splash.png.flat",
+        "source": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-android-26:\\drawable\\live_splash.png"
+    },
+    {
+        "merged": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-debug-25:\\layout_primary_fragments.xml.flat",
+        "source": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-android-26:\\layout\\primary_fragments.xml"
+    },
+    {
+        "merged": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-debug-25:\\layout_settings_fragment.xml.flat",
+        "source": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-android-26:\\layout\\settings_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-debug-25:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\kises\\.gradle\\daemon\\8.7\\live-android-26:\\layout\\activity_main.xml"
+    }
+]

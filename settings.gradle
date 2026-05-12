@@ -13,4 +13,4 @@ include ':stage'
 include ':live'
 
 project(':stage').projectDir = new File(rootDir, 'Stage/android')
-project(':live').projectDir  = new File(rootDir, 'Live/android')
+project(':live').projectDir = new File(rootDir, 'Live/android')

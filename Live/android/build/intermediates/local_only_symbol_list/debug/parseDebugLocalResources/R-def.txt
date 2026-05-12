@@ -1,0 +1,18 @@
+R_DEF: Internal format may change without notice
+local
+drawable guitar_red
+drawable lighted_stage
+drawable live_splash
+id aboutText
+id background
+id iconView
+id pager
+id showLabel
+id textView
+layout about_fragment
+layout activity_main
+layout primary_fragment
+layout settings_fragment
+string about_body
+string app_name
+string no_show_loaded

@@ -2,6 +2,9 @@
 
 package live;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +13,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -22,8 +27,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 public class MainActivity extends AppCompatActivity implements BridgeObserver.Listener {
     private static final String TAG = "MainActivity";
 
@@ -71,13 +80,21 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
         settings.add("startup");
 
         setupViewPager();
+        findViewById(android.R.id.content).post(this::requestBlePermissions);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "App is coming back to the foreground!");
-        observer.startScan(this);
+//        observer.startScan(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (observer != null) {
+            observer.startScan(this);
+        }
     }
 
     @Override
@@ -95,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
         buzzPlayer.shutdown();
         executor.shutdown();
     }
-
     private void setupViewPager() {
         ViewPager2 pager = findViewById(R.id.pager);
         PagerAdapter adapter = new PagerAdapter(this);
@@ -103,6 +119,59 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
         adapter.addPage(settings);
         adapter.addPage(about);
         pager.setAdapter(adapter);
+    }
+
+    /* Bluetooth Perms */
+    private static final int BLE_PERMISSION_REQUEST_CODE = 1001;
+    private void requestBlePermissions() {
+        List<String> needed = new ArrayList<>();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                needed.add(Manifest.permission.BLUETOOTH_SCAN);
+            }
+        }
+        else {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                needed.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+        }
+
+        if (needed.isEmpty()) {
+            onBlePermissionsGranted();
+        }
+        else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    needed.toArray(new String[0]),
+                    BLE_PERMISSION_REQUEST_CODE
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode != BLE_PERMISSION_REQUEST_CODE) return;
+
+        boolean allGranted = grantResults.length > 0;
+        for (int r : grantResults) {
+            if (r != PackageManager.PERMISSION_GRANTED) {
+                allGranted = false;
+                break;
+            }
+        }
+
+        if (allGranted) {
+            onBlePermissionsGranted();
+        }
+        else {
+            Log.e(TAG, "Bluetooth scan permission denied");
+        }
+    }
+
+    private void onBlePermissionsGranted() {
+        observer.startScan(this);
     }
 
     public void executeCommand(String command, int argument) {
