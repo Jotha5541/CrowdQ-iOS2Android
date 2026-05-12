@@ -38,7 +38,7 @@ public class PrimaryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_primary, container, false);
+        return inflater.inflate(R.layout.primary_fragment, container, false);
     }
 
     @Override
@@ -127,7 +127,9 @@ public class PrimaryFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        animHandler.removeCallbacks(bounceRunnable);
+        if (bounceRunnable != null) {
+            animHandler.removeCallbacks(bounceRunnable);
+        }
         bouncing = false;
     }
 }

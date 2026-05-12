@@ -8,5 +8,9 @@ pluginManagement {
 }
 
 rootProject.name = 'CrowdQ'
-include ':app'
-project(':app').projectDir = new File('Stage/android')
+
+include ':stage'
+include ':live'
+
+project(':stage').projectDir = new File(rootDir, 'Stage/android')
+project(':live').projectDir  = new File(rootDir, 'Live/android')

@@ -1,6 +1,8 @@
 // ScrollingTextPage.swift
 // Extension of Page1 fragment
 
+package stage;
+
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +31,7 @@ public class ScrollingTextFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_scrolling_text, container, false);
+        return inflater.inflate(R.layout.scrolling_text_fragment, container, false);
     }
 
     @Override

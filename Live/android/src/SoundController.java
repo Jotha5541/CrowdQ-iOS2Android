@@ -39,16 +39,7 @@ public class SoundController {
 
 
     private void warmUpAudio() {
-        try {
-            audioPlayer = MediaPlayer.create(context, R.raw.silent);
-            if (audioPlayer != null) {
-                audioPlayer.setLooping(false); // Equivalent to numberOfLoops = 0
-                audioPlayer.start();
-                Log.d(TAG, "Audio warmed up");
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error warming up audio: " + e.getMessage());
-        }
+        Log.d(TAG, "Audio warmup skipped");
     }
 
     public void addSound(byte[] sound, int duration) {

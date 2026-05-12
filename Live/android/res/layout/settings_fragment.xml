@@ -5,10 +5,12 @@
 
     <!-- Background image — equivalent to UIImageView lighted-stage sent to back -->
     <ImageView
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/lighted_stage"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
 
     <!-- Equivalent to UIStackView vertical: showLabel + textView -->
     <LinearLayout
@@ -23,7 +25,7 @@
             android:id="@+id/showLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-- no show loaded --"
+            android:text="@string/no_show_loaded"
             android:textSize="35sp"
             android:gravity="center"
             android:padding="8dp"

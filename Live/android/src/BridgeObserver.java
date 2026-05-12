@@ -64,7 +64,7 @@ public class BridgeObserver {
 
         // Only receiving app packets
         ScanFilter filter = new ScanFilter.Builder()
-                .setServiceUuid(new ParceUuid(phonesUuid))
+                .setServiceUuid(new ParcelUuid(phonesUuid))
                 .build();
 
         // Low latency, no delay
@@ -84,7 +84,7 @@ public class BridgeObserver {
     }
 
     @SuppressLint("MissingPermission")
-    public void stopScan() {
+    public void stopScan(Context context) {
         if (scanner != null && scanCallback != null) {
             if (hasScanPermissions(context)) {
                 scanner.stopScan(scanCallback);

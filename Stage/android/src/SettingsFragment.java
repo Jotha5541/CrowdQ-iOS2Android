@@ -35,6 +35,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.Collections;
 
 import exchange.CrowdQExchangeTag;
 
@@ -86,7 +87,7 @@ public class SettingsFragment extends Fragment {
         hubSegmentedControl  = view.findViewById(R.id.hubSegmentedControl);
 
         // Equivalent to setupMenu(["free/demo.json"], overwrite: false)
-        setupMenu(List.of("free/demo.json"), false);
+        setupMenu(Collections.singletonList("free/demo.json"), false);
 
         // Equivalent to hubSegmentedControl.addTarget hubChanged
         hubSegmentedControl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -124,8 +125,7 @@ public class SettingsFragment extends Fragment {
                     String name = showTitle.length() > 5
                             ? showTitle.substring(0, showTitle.length() - 5)
                             : showTitle;
-                    main.bleClient.enqueue(
-                            requireContext(),
+                    main.enqueue(
                             CrowdQExchangeTag.LOAD,
                             0,
                             name
@@ -258,15 +258,15 @@ public class SettingsFragment extends Fragment {
         if (isOn) {
             int selectedIndex = hubSegmentedControl.getSelectedItemPosition();
             if (selectedIndex == 0) {
-                if (main != null) main.bleClient.setListening(true);
+                if (main != null) main.setListening(true);
                 mainHandler.post(() -> information.setText("Listening for basic sensors"));
             } else {
                 popup("the selected hub is handling sensors");
-                if (main != null) main.bleClient.setListening(false);
+                if (main != null) main.setListening(false);
                 mainHandler.post(() -> sensorSwitch.setChecked(false));
             }
         } else {
-            if (main != null) main.bleClient.setListening(false);
+            if (main != null) main.setListening(false);
         }
     }
 

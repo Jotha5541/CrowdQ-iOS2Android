@@ -8,7 +8,7 @@ public class MediaEffectsPipeline {
     // Optimization: removing sleep method and keep threads free for burst BLE packets
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    public void queueEffect(Runnable executeTask, long sleepDurationMs, Runnable cleanupTasks) {
+    public void queueEffect(Runnable executeTask, long sleepDurationMs, Runnable cleanupTask) {
         executeTask.run();
 
         scheduler.schedule(() -> {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CrowdQ Live</string>
+
+    <string name="no_show_loaded">-- no show loaded --</string>
+
+    <string name="about_body">About CrowdQ\u2122\n\nCrowdQ turns your phone into part of the show.\n\nLights flash, visuals pulse, sounds hit, and your phone vibrates in sync with the artist live on stage — triggered by their moves, gestures and beat.</string>
+</resources>

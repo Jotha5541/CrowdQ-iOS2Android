@@ -1,46 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
-    <!-- Background image — equivalent to UIImageView lighted-stage sent to back -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/lighted_stage"
-        android:scaleType="centerCrop" />
-
-    <!-- Equivalent to UIStackView vertical: showLabel + textView -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:orientation="vertical">
 
+        <!-- Mode label (e.g. "Free show mode") -->
         <TextView
-            android:id="@+id/showLabel"
+            android:id="@+id/modeLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-- no show loaded --"
-            android:textSize="35sp"
+            android:text="Initializing..."
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:gravity="center"
-            android:padding="8dp"
-            android:background="#F2F2F7"
             android:layout_marginBottom="16dp" />
 
-        <TextView
-            android:id="@+id/textView"
+        <!-- Information / status (used as read-only feedback line) -->
+        <EditText
+            android:id="@+id/information"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
+            android:hint="status"
             android:textSize="16sp"
-            android:padding="8dp"
-            android:background="#F2F2F7"
-            android:scrollbars="vertical"
             android:focusable="false"
-            android:clickable="false" />
+            android:layout_marginBottom="24dp" />
+
+        <!-- Hub selector -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hub"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/hubSegmentedControl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Show chooser -->
+        <Button
+            android:id="@+id/optionsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose show"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Sensitivity slider  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sensitivity"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/sliderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.00G"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/rangeSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:progress="100"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Sensor toggle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Enable sensors"
+                android:textSize="16sp" />
+
+            <Switch
+                android:id="@+id/sensorSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

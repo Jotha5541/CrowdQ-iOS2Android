@@ -36,7 +36,7 @@ public class ImageController {
             final ImagePopupFragment[] popup = {null};
 
             mainHandler.post(() -> {
-                popup[0] = ImagePopupFragment.newInstance(imageResId, duration, width, height);
+                popup[0] = ImagePopupFragment.newInstance(imageResId, duration, 500, 500);
                 popup[0].show(activity.getSupportFragmentManager(), "image_popup");
             });
 

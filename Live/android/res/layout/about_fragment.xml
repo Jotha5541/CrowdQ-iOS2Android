@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -11,14 +10,13 @@
         android:layout_height="match_parent"
         android:src="@drawable/lighted_stage"
         android:scaleType="centerCrop"
-        android:clipToPadding="true" />
+        android:contentDescription="@null" />
 
     <!-- Scrollable text over background -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:clipToPadding="true">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/aboutText"
@@ -28,7 +26,7 @@
             android:padding="8dp"
             android:background="#F2F2F7"
             android:textColor="@android:color/primary_text_light"
-            android:text="About CrowdQ™\n\nCrowdQ turns your phone into part of the show.\n\nLights flash, visuals pulse, sounds hit, and your phone vibrates in sync with the artist live on stage -- triggered by their moves, gestures and beat." />
+            android:text="@string/about_body" />
 
     </ScrollView>
 

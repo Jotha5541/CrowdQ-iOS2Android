@@ -27,11 +27,10 @@ android {
             java.srcDirs = [
                     'src',
                     '../../Exchange/Sources/src',
-                    '../../Live/android/src',
                     '../../Core/Threading'
             ]
             manifest.srcFile 'AndroidManifest.xml'
-            res.srcDirs = ['res', '../../Live/android/res']
+            res.srcDirs = ['res']
         }
     }
 

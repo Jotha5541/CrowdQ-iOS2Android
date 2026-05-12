@@ -73,7 +73,7 @@ public class BuzzController {
 
         try {
             Thread.sleep(duration);
-        } catch (InterruptedExecution e) {
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }

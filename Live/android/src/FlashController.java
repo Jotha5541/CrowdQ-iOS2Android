@@ -43,10 +43,10 @@ public class FlashController {
 
         try {   // Android: any intensity > 0 turns on flash
             if (intensity > 0) {
-                cameraManager.setTorchMode(cmaeraId, true);
+                cameraManager.setTorchMode(cameraId, true);
             }
             else {
-                cameraManager.setTorchMode(cameraid, false);
+                cameraManager.setTorchMode(cameraId, false);
             }
 
             Thread.sleep(duration);

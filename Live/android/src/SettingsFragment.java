@@ -5,6 +5,7 @@ package live;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +32,14 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NOnNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         showLabel = view.findViewById(R.id.showLabel);
         textView = view.findViewById(R.id.textView);
 
         textView.setText("Waiting for a show...\n");
+        textView.setMovementMethod(new ScrollingMovementMethod());
 
         showLabel.setText("-- No Show Loaded --");
     }
@@ -51,11 +53,11 @@ public class SettingsFragment extends Fragment {
         mainHandler.postDelayed(() -> {
             textView.append(info);
 
-            int scrollAmt = texxtView.getLayout() != null
+            int scrollAmt = textView.getLayout() != null
                     ? textView.getLayout().getLineTop(textView.getLineCount()) - textView.getHeight()
                     : 0;
             if (scrollAmt > 0) {
-                textView.scrollT(0, scrollAmt);
+                textView.scrollTo(0, scrollAmt);
             }
         }, 1600);
     }

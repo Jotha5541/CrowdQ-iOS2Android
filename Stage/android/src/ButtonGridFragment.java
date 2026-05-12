@@ -219,8 +219,7 @@ public class ButtonGridFragment extends Fragment {
                 .start();
 
         if (main != null) {
-            main.bleClient.enqueue(
-                    requireContext(),
+            main.enqueue(
                     CrowdQExchangeTag.COMMAND,
                     dollarArgument,
                     action.trim()

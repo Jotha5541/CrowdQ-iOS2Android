@@ -634,7 +634,6 @@ drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable guitar_red
 drawable lighted_stage
-drawable live_splash
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -657,7 +656,6 @@ id FUNCTION
 id META
 id SHIFT
 id SYM
-id aboutText
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -742,12 +740,13 @@ id fragment_container_view_tag
 id group_divider
 id home
 id homeAsUp
+id hubSegmentedControl
 id icon
-id iconView
 id icon_group
 id ifRoom
 id image
 id info
+id information
 id instructions
 id italic
 id item_touch_helper_previous_elevation
@@ -757,6 +756,7 @@ id listMode
 id list_item
 id message
 id middle
+id modeLabel
 id multiply
 id never
 id none
@@ -766,6 +766,7 @@ id notification_main_column
 id notification_main_column_container
 id off
 id on
+id optionsButton
 id pager
 id parentPanel
 id progress_circular
@@ -790,11 +791,12 @@ id search_plate
 id search_src_text
 id search_voice_btn
 id select_dialog_listview
+id sensorSwitch
 id shortcut
 id showCustom
 id showHome
-id showLabel
 id showTitle
+id sliderLabel
 id spacer
 id special_effects_controller_view_tag
 id split_action_bar
@@ -823,7 +825,6 @@ id text
 id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
-id textView
 id time
 id title
 id titleDividerNoCustom
@@ -884,7 +885,6 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
-layout about_fragment
 layout activity_main
 layout button_grid_fragment
 layout continuous_control_fragment
@@ -896,7 +896,6 @@ layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
 layout page1_fragment
-layout primary_fragments
 layout scrolling_text_fragment
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
