@@ -31,6 +31,7 @@
         android:debuggable="true"
         android:extractNativeLibs="false"
         android:label="CrowdQ Stage"
+        android:testOnly="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
             android:name="stage.MainActivity"

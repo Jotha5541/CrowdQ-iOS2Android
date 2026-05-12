@@ -24,7 +24,6 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 public class MainActivity extends AppCompatActivity implements BridgeObserver.Listener {
     private static final String TAG = "MainActivity";
 

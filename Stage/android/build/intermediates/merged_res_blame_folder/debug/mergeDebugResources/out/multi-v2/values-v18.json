@@ -4,7 +4,7 @@
             "outputFile": "stage-mergeDebugResources-23:/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "/Users/joseph/.gradle/caches/transforms-4/a6263f23dc36411c1406d9ffd3b371e3/transformed/appcompat-1.6.1/res/values-v18/values-v18.xml",
+                    "source": "C:\\Users\\kises\\.gradle\\caches\\transforms-4\\a6263f23dc36411c1406d9ffd3b371e3\\transformed\\appcompat-1.6.1\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

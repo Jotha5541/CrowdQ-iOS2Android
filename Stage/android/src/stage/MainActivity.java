@@ -2,20 +2,32 @@
 // SceneDelegate.swift
 package stage;
 
+import static android.provider.Settings.*;
+
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
+import android.content.pm.PackageManager;
+import android.Manifest;
+import android.os.Build;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import exchange.CrowdQExchangeTag;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 import android.os.ParcelUuid;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,11 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public BLEManager bleClient;
+    private final ExecutorService bleExecutor = Executors.newSingleThreadExecutor();
     private Direction lastDirection = Direction.NONE;
-    private String deviceUUID;
-
-    private ViewPager2 pager;
-    private double gravityScale = 2.0;
 
 
     private final ParcelUuid phonesUUID = new ParcelUuid(UUID.fromString("0000EEEE-0000-1000-8000-00805F9B34FB"));
@@ -61,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Device ID
-        deviceUUID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds")
+        String deviceUUID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
         Log.d(TAG, "Device UUID: " + deviceUUID);
 
         // Prevent sleeping when active
@@ -75,11 +85,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Initializes BLE Manager
-//        bleClient = new BLEManager(phonesUUID, sensorUUID, this::processTelemetry);
         bleClient = new BLEManager(phonesUUID, sensorUUID, data -> processTelemetry(data.getBytes()));
 
+//        requestBlePermissions();
+        findViewById(android.R.id.content).post(this::requestBlePermissions);
         // Setup UI (Pager logic)
         setupViewPager();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (bleClient != null) {
+            bleClient.setListening(this, true);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bleClient != null) {
+            bleClient.setListening(this, false);
+        }
     }
 
     @Override
@@ -87,31 +114,25 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Log.d(TAG, "App is coming back to the foreground!");
 
-        if (bleClient != null) {
-            bleClient.openGattServer(this);
-            bleClient.setListening(this, true);
-        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (bleClient != null) {
-            bleClient.setListening(this, false);
-        }
+//        Log.w(TAG, "onPause called", new Throwable("onPause stack trace"));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (bleClient != null) {
-            bleClient.destroy();
-        }
+        bleExecutor.shutdown();
+        if (bleClient != null) bleClient.destroy();
     }
 
     private void processTelemetry(byte[] rawData) {
         try {
             Telemetry telemetry = new Telemetry(rawData);
+            double gravityScale = 2.0;
             int threshold = (int) ((gravityScale / 2.0) * 512.0); // 2 G's
 
             Direction heading = lastDirection;
@@ -151,11 +172,80 @@ public class MainActivity extends AppCompatActivity {
 
         PagerAdapter adapter = new PagerAdapter(this);
 
+        SettingsFragment settingsFragment = new SettingsFragment();
+        settingsFragment.setMain(this);
+
         adapter.addPage(new Page1Fragment());
         adapter.addPage(new SettingsFragment());
         adapter.addPage(new ButtonGridFragment());
 
         pager.setAdapter(adapter);
+    }
+
+    /* Bluetooth Permissions */
+    private static final int BLE_PERMISSION_REQUEST_CODE = 1001;
+    private void requestBlePermissions() {
+        List<String> needed = new ArrayList<>();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Android 12+: Bluetooth perms
+            if (checkSelfPermission(Manifest.permission.BLUETOOTH_SCAN)
+                    != PackageManager.PERMISSION_GRANTED) {
+                needed.add(Manifest.permission.BLUETOOTH_SCAN);
+            }
+            if (checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT)
+                    != PackageManager.PERMISSION_GRANTED) {
+                needed.add(Manifest.permission.BLUETOOTH_CONNECT);
+            }
+            if (checkSelfPermission(Manifest.permission.BLUETOOTH_ADVERTISE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                needed.add(Manifest.permission.BLUETOOTH_ADVERTISE);
+            }
+        }
+        else {
+            // Android 6-11: location permission gates BLE scanning
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                needed.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+        }
+
+        if (needed.isEmpty()) {
+            onBlePermissionsGranted();
+        }
+        else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    needed.toArray(new String[0]),
+                    BLE_PERMISSION_REQUEST_CODE
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode != BLE_PERMISSION_REQUEST_CODE) return;
+
+        boolean allGranted = grantResults.length > 0;
+        for (int r : grantResults) {
+            if (r != PackageManager.PERMISSION_GRANTED) {
+                allGranted = false;
+                break;
+            }
+        }
+
+        if (allGranted) {
+            onBlePermissionsGranted();
+        }
+        else {
+            Log.e("Main Activity", "Bluetooth permissions denied - BLE features disabled");
+        }
+    }
+
+    private void onBlePermissionsGranted() {
+        bleExecutor.execute(() -> bleClient.openGattServer(this));
+        bleClient.setListening(this, true);
     }
 
     public void setListening (boolean listening) {

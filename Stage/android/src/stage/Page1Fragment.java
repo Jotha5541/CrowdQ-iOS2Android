@@ -2,6 +2,7 @@
 
 package stage;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -131,10 +132,13 @@ public class Page1Fragment extends Fragment {
     private void verifyEmail(String email) {
         mainHandler.post(() -> instructions.setText("verifying email...."));
 
+        android.content.Context appContext = requireContext().getApplicationContext();
+
         executor.execute(() -> {
             try {
+                @SuppressLint("HardwareIds")
                 String deviceUUID = android.provider.Settings.Secure.getString(
-                        requireActivity().getContentResolver(),
+                        appContext.getContentResolver(),
                         android.provider.Settings.Secure.ANDROID_ID
                 );
 
@@ -174,6 +178,9 @@ public class Page1Fragment extends Fragment {
 
     private void unsubscribe() {
         String email = emailTextField.getText().toString();
+
+
+
         executor.execute(() -> {
             try {
                 URL url = new URL("https://luxcedia.icu/cgi-bin/unsubscribe");
@@ -211,5 +218,11 @@ public class Page1Fragment extends Fragment {
                 mainHandler.post(() -> instructions.setText("Error: " + e.getMessage()));
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        executor.shutdown();
     }
 }

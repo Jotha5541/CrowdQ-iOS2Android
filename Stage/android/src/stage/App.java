@@ -1,7 +1,6 @@
 package stage;
 
 import android.app.Application;
-import android.util.Log;
 
 public class App extends Application {
 

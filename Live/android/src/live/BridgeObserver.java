@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import exchange.CrowdQExchange;
-import threading.SerialExecutor;
+//import threading.SerialExecutor;
 
 public class BridgeObserver {
     private static final String TAG = "BridgeObserver";
@@ -93,7 +93,7 @@ public class BridgeObserver {
         serialExecutor.shutdown();
     }
 
-    // Handling incoming telemetry
+    /* Handling Incoming Telemetry Data */
     private void handleExchange(ScanResult result) {
         ScanRecord record = result.getScanRecord();
         if (record == null) return;

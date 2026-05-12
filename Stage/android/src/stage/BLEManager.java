@@ -29,9 +29,6 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
-import exchange.CrowdQExchange;
-import exchange.CrowdQExchangeTag;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,6 +36,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import exchange.CrowdQExchange;
+import exchange.CrowdQExchangeTag;
 
 public class BLEManager {
     private static final String TAG = "BLEManager";
@@ -215,6 +215,8 @@ public class BLEManager {
     }
 
     public void setListening(Context context, boolean isListening) {
+        if (this.listening == isListening) return;
+        Log.d(TAG, "setListening: " + isListening);
         this.listening = isListening;
         if (listening) {
             startScanning(context);
@@ -227,6 +229,10 @@ public class BLEManager {
     /* Scanning */
     @SuppressLint("MissingPermission")
     private void startScanning(Context context) {
+        if (scanCallback != null) {
+            Log.d(TAG, "Already scanning, skipping duplicate start");
+            return;
+        }
         if (adapter == null || !hasBlePermissions(context, Manifest.permission.BLUETOOTH_SCAN)) return;
 
         scanner = adapter.getBluetoothLeScanner();
@@ -277,6 +283,7 @@ public class BLEManager {
         }
     }
 
+    /* Bluetooth Permissions */
     private boolean hasBlePermissions(Context context, String android12Permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             return ContextCompat.checkSelfPermission(context, android12Permission) == PackageManager.PERMISSION_GRANTED;
