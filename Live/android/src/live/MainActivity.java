@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        observer.destroy();
         soundPlayer.shutdown();
         flashPlayer.shutdown();
         imagePlayer.shutdown();
@@ -114,7 +115,9 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
     }
     private void setupViewPager() {
         ViewPager2 pager = findViewById(R.id.pager);
+        pager.setSaveEnabled(false);
         PagerAdapter adapter = new PagerAdapter(this);
+
         adapter.addPage(primary);
         adapter.addPage(settings);
         adapter.addPage(about);

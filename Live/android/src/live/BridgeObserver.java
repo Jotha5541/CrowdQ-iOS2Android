@@ -53,6 +53,7 @@ public class BridgeObserver {
     public void startScan(Context context) {
         if (scanCallback != null) {
             Log.d(TAG, "Already scanning, skipping duplicate start");
+            return;
         }
         if (!hasScanPermissions(context)) {
             Log.e(TAG, "Missing Bluetooth Scan permissions.");
@@ -92,8 +93,8 @@ public class BridgeObserver {
             if (hasScanPermissions(context)) {
                 scanner.stopScan(scanCallback);
             }
+            scanCallback = null;
         }
-        serialExecutor.shutdown();
     }
 
     /* Handling Incoming Telemetry Data */
@@ -143,5 +144,10 @@ public class BridgeObserver {
             return ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED;
         }
         return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void destroy() {
+        scanCallback = null;
+        serialExecutor.shutdown();
     }
 }

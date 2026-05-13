@@ -171,16 +171,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         ViewPager2 pager = findViewById(R.id.pager);
-
+        pager.setSaveEnabled(false);
         PagerAdapter adapter = new PagerAdapter(this);
+
+        Page1Fragment page1 = new Page1Fragment();
+        page1.setMain(this);
 
         SettingsFragment settingsFragment = new SettingsFragment();
         settingsFragment.setMain(this);
 
-        adapter.addPage(new Page1Fragment());
-        adapter.addPage(new SettingsFragment());
+        adapter.addPage(page1);
+        adapter.addPage(settingsFragment);
         adapter.addPage(new ButtonGridFragment());
-
         pager.setAdapter(adapter);
     }
 
