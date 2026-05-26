@@ -31,17 +31,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutorService;
 import java.util.Collections;
 
 import exchange.CrowdQExchangeTag;
 
 public class SettingsFragment extends Fragment {
 
-    // Equivalent to var main: ViewController?
     private MainActivity main;
 
     private TextView modeLabel;
@@ -52,18 +51,19 @@ public class SettingsFragment extends Fragment {
     private Button optionsButton;
     private Spinner hubSegmentedControl;
 
-    // Equivalent to var gravityScale: Float = 1.0
     public float gravityScale = 1.0f;
 
     private String showTitle;
     private AlertDialog alert;
-    private Timer timer;
+
     private boolean active = false;
 
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    // Equivalent to var main: ViewController?
+    private ScheduledExecutorService scheduler;
+
+
     public void setMain(MainActivity main) {
         this.main = main;
     }
@@ -115,27 +115,18 @@ public class SettingsFragment extends Fragment {
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // Equivalent to Timer.scheduledTimer — periodically broadcast show name
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (showTitle != null && main != null) {
-                    // Drop last 5 chars — equivalent to dropLast(5)
-                    String name = showTitle.length() > 5
-                            ? showTitle.substring(0, showTitle.length() - 5)
-                            : showTitle;
-                    main.enqueue(
-                            CrowdQExchangeTag.LOAD,
-                            0,
-                            name
-                    );
-                }
+        // Periodically broadcasting show name
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleWithFixedDelay(() -> {
+            if (showTitle != null && main != null) {
+                String name = showTitle.length() > 5
+                        ? showTitle.substring(0, showTitle.length() - 5)
+                        : showTitle;
+                main.enqueue(CrowdQExchangeTag.LOAD, 0, name);
             }
-        }, 0, 10000); // 10 second interval
+        }, 0, 10, TimeUnit.SECONDS);
     }
 
-    // Equivalent to func setupMenu()
     private void setupMenu(List<String> choices, boolean overwrite) {
         if (!overwrite && active) return;
         active = true;
@@ -183,7 +174,7 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    // Equivalent to func onVerified()
+
     public void onVerified() {
         mainHandler.post(() -> {
             modeLabel.setText("Free show mode");
@@ -234,7 +225,6 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    // Equivalent to func popup()
     private void popup(String message) {
         mainHandler.post(() -> {
             if (alert != null) alert.dismiss();
@@ -245,7 +235,6 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    // Equivalent to @objc func hubChanged()
     private void hubChanged(int selectedIndex) {
         if (selectedIndex != 0) {
             popup("hubs are disabled in this early version");
@@ -253,7 +242,6 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    // Equivalent to @objc func sensorSwitchChanged()
     private void sensorSwitchChanged(boolean isOn) {
         if (isOn) {
             int selectedIndex = hubSegmentedControl.getSelectedItemPosition();

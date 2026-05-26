@@ -27,7 +27,8 @@ android {
             java.srcDirs = [
                     'src',
                     '../../Exchange/Sources/src',
-                    '../../Core/Threading'
+                    '../../Core/Threading',
+                    '../../Bluedog/android/src'
             ]
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
@@ -44,5 +45,4 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.fragment:fragment:1.6.1'
-    implementation project(':bluedog')
 }
