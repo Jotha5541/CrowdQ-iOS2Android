@@ -3,6 +3,7 @@ package threading;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/* Single thread executor for BridgeObserver optimization */
 public class SerialExecutor {
     private final ExecutorService executor;
 
