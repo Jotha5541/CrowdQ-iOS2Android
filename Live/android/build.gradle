@@ -27,7 +27,8 @@ android {
             java.srcDirs = [
                     'src',
                     '../../Exchange/Sources/src',
-                    '../../Core/Threading'
+                    '../../Core/Threading',
+                    '../../Bluedog/android/src'
             ]
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']

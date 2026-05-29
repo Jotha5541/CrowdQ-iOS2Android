@@ -4,9 +4,9 @@ package live;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +20,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.net.Uri;
 import android.widget.VideoView;
+import android.widget.ImageView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -33,8 +34,25 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity implements BridgeObserver.Listener {
+import bluedog.BlueDog;
+import bluedog.ShowEffects;
+
+public class MainActivity extends AppCompatActivity implements BridgeObserver.Listener, ShowEffects {
     private static final String TAG = "MainActivity";
+
+    private static final String DEMO_SHOW_JSON =
+            "{\"title\":\"CrowdQ Demo\",\"version\":\"1.0\",\"commands\":{" +
+                    "\".right\":{\"flash\":{\"intensity\":0.8,\"duration\":300},\"buzz\":{\"pattern\":2,\"duration\":200}}," +
+                    "\".left\":{\"flash\":{\"intensity\":0.8,\"duration\":300},\"buzz\":{\"pattern\":2,\"duration\":200}}," +
+                    "\".up\":{\"flash\":{\"intensity\":1.0,\"duration\":500},\"buzz\":{\"pattern\":3,\"duration\":300}}," +
+                    "\".down\":{\"flash\":{\"intensity\":0.4,\"duration\":200},\"buzz\":{\"pattern\":1,\"duration\":150}}," +
+                    "\".inward\":{\"flash\":{\"intensity\":1.0,\"duration\":700},\"buzz\":{\"pattern\":5,\"duration\":400},\"sync\":true}," +
+                    "\".outward\":{\"flash\":{\"intensity\":0.6,\"duration\":250},\"buzz\":{\"pattern\":4,\"duration\":200}}" +
+                    "}}";
+
+    private BlueDog blueDog;
+
+    private AlertDialog alert;
 
     private BridgeObserver observer;
     private PrimaryFragment primary;
@@ -46,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
     private ImageController imagePlayer;
     private BuzzController buzzPlayer;
 
+
     private int quadrant = 0;
 
-    private AlertDialog alert;
     private boolean didPresent = false;
 
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -68,6 +86,15 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
         imagePlayer = new ImageController();
         buzzPlayer = new BuzzController(this);
 
+        blueDog = new BlueDog(this);
+        blueDog.loadShow(DEMO_SHOW_JSON);   // pre-load so commands work immediately
+
+        // Temporary test — fires .right command 4 seconds after launch
+        mainHandler.postDelayed(() -> {
+            Log.d(TAG, "DEBUG: firing test command");
+            blueDog.executeCommand(".right", 0);
+        }, 4000);
+
         primary = new PrimaryFragment();
         settings = new SettingsFragment();
         about = new AboutFragment();
@@ -86,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "App is coming back to the foreground!");
-//        observer.startScan(this);
     }
 
     @Override
@@ -113,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
         buzzPlayer.shutdown();
         executor.shutdown();
     }
+
     private void setupViewPager() {
         ViewPager2 pager = findViewById(R.id.pager);
         pager.setSaveEnabled(false);
@@ -178,8 +205,10 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
     }
 
     public void executeCommand(String command, int argument) {
-        // BlueDog translated
         Log.d(TAG, "executeCommand: " + command + " arg: " + argument);
+        if (blueDog.isLoaded()) {
+            blueDog.executeCommand(command, argument);
+        }
     }
 
     public void loadNewShow(String jsonName) {
@@ -209,7 +238,10 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
                 settings.add("loaded " + jsonName);
                 mainHandler.post(() -> settings.setShowName(jsonName));
 
-                // Bluedog wired here once translated
+                if (blueDog != null) {
+                    blueDog.loadShow(response.toString());
+                }
+
             } catch (Exception e) {
                 settings.add("failed loading " + jsonName + ": " + e.getMessage());
                 Log.e(TAG, "loadNewShow error: " + e.getMessage());
@@ -217,30 +249,31 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
         });
     }
 
-    public void flasher(double intensity, int duration) {
-        Log.d(TAG, "flasher " + intensity + " " + duration);
-        flashPlayer.addFlash(intensity, duration);
+
+    /* ShowEffect implementations */
+    @Override
+    public void flash(double intensity, int durationMs) {
+        flashPlayer.addFlash(intensity, durationMs);
     }
 
-    public void render(int imageResId, int duration) {
-        imagePlayer.addImage(this, imageResId, duration);
+    @Override
+    public void buzz(int pattern, int durationMs) {
+        buzzPlayer.addBuzz(pattern, durationMs);
     }
 
-    public void player(byte[] sound, int duration) {
-        soundPlayer.addSound(sound, duration);
+    @Override
+    public void playSound(byte[] soundData, int durationMs) {
+        soundPlayer.addSound(soundData, durationMs);
     }
 
-    public void buzzer(int pattern, int duration) {
-        buzzPlayer.addBuzz(pattern, duration);
+    @Override
+    public void showMessage(String message) {
+        printer(message);
     }
 
-    public void setBackground(int imageResId) {
-        mainHandler.post(() -> {
-            if (primary.getView() != null) {
-                primary.getView().findViewById(R.id.background)
-                        .setBackgroundResource(imageResId);
-            }
-        });
+    @Override
+    public void playVideo(String url) {
+        video(url);
     }
 
     public void printer(String message) {
@@ -263,6 +296,33 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
                     .setView(videoView)
                     .setPositiveButton("Close", (d, w) -> videoView.stopPlayback())
                     .show();
+        });
+    }
+
+    @Override
+    public void renderImage(Bitmap image, int durationMs) {
+        mainHandler.post(() -> {
+            ImageView imageView = new ImageView(this);
+            imageView.setImageBitmap(image);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setView(imageView)
+                    .create();
+            dialog.show();
+            mainHandler.postDelayed(dialog::dismiss, durationMs);
+        });
+    }
+
+    @Override
+    public void setBackground(Bitmap image) {
+        mainHandler.post(() -> {
+            if (primary.getView() != null) {
+                ImageView bg = primary.getView().findViewById(R.id.background);
+                if (bg != null) {
+                    bg.setImageBitmap(image);
+                }
+            }
         });
     }
 

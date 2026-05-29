@@ -1,4 +1,4 @@
-#Tue May 12 13:06:22 PDT 2026
+#Mon May 25 20:14:28 PDT 2026
 base.0=E\:\\Users\\kises\\Documents\\Visual Studio Code\\Luxcedia\\CrowdQ\\Stage\\android\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=E\:\\Users\\kises\\Documents\\Visual Studio Code\\Luxcedia\\CrowdQ\\Stage\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.2=E\:\\Users\\kises\\Documents\\Visual Studio Code\\Luxcedia\\CrowdQ\\Stage\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex

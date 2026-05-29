@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Bluedog/android" />
             <option value="$PROJECT_DIR$/Live/android" />
             <option value="$PROJECT_DIR$/Stage/android" />
           </set>

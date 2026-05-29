@@ -11,6 +11,8 @@ rootProject.name = 'CrowdQ'
 
 include ':stage'
 include ':live'
+include ':bluedog'
 
 project(':stage').projectDir = new File(rootDir, 'Stage/android')
 project(':live').projectDir = new File(rootDir, 'Live/android')
+project(':bluedog').projectDir = new File(rootDir, 'Bluedog/android')
