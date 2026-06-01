@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        Log.w(TAG, "onPause called", new Throwable("onPause stack trace"));
     }
 
     @Override
@@ -131,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         if (bleClient != null) bleClient.destroy();
     }
 
+    /* Decodes accelerometer sensorID (ax, ay, az) to determine direction of "wand" */
     private void processTelemetry(byte[] rawData) {
         try {
             Telemetry telemetry = new Telemetry(rawData);

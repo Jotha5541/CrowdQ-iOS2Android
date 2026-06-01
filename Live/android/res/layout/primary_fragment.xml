@@ -9,7 +9,7 @@
         android:src="@drawable/lighted_stage"
         android:scaleType="centerCrop" />
 
-    <!-- Bouncing guitar icon — equivalent to iconView UIImageView -->
+    <!-- Bouncing guitar icon -->
     <ImageView
         android:id="@+id/iconView"
         android:layout_width="50dp"

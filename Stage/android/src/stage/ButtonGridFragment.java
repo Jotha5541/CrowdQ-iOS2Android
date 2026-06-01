@@ -36,13 +36,10 @@ public class ButtonGridFragment extends Fragment {
     private LinearLayout stackView;
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
-    // Equivalent to var radios: [RadioButton]
     private final List<Button> radios = new ArrayList<>();
 
-    // Equivalent to var toggleState: [String: Int]
     private final Map<String, Integer> toggleState = new HashMap<>();
 
-    // Equivalent to var dollarArgument: Int = 0
     private int dollarArgument = 0;
 
     public void setMain(MainActivity main) {
@@ -61,14 +58,12 @@ public class ButtonGridFragment extends Fragment {
 
         stackView = view.findViewById(R.id.stackView);
 
-        // Equivalent to setupDynamicButtonGrid(actions: [], toggles: [])
         setupDynamicButtonGrid(new ArrayList<>(), new ArrayList<>());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Equivalent to supportedInterfaceOrientations = .landscape
         requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
@@ -79,25 +74,23 @@ public class ButtonGridFragment extends Fragment {
         requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
-    // Equivalent to func newShow()
     public void newShow(List<String> immediates, List<String> sensors) {
         mainHandler.post(() -> {
             setupDynamicButtonGrid(immediates, sensors);
         });
     }
 
-    // Equivalent to func setupDynamicButtonGrid()
     private void setupDynamicButtonGrid(List<String> actions, List<String> toggles) {
         stackView.removeAllViews();
         stackView.setOrientation(LinearLayout.VERTICAL);
 
-        // Track toggle states — equivalent to toggleState[toggle] = -1
+        // Track toggle states
         toggleState.clear();
         for (String toggle : toggles) {
             toggleState.put(toggle, -1);
         }
 
-        // Radio button row — equivalent to createHorizontalStack() + RadioButton loop
+        // Radio button row
         LinearLayout radioRow = createHorizontalStack();
         stackView.addView(radioRow);
         radios.clear();
@@ -109,7 +102,7 @@ public class ButtonGridFragment extends Fragment {
             radioRow.addView(radio);
         }
 
-        // Action + toggle buttons — equivalent to actions+toggles loop
+        // Action + toggle buttons
         LinearLayout currentRow = createHorizontalStack();
         stackView.addView(currentRow);
 
@@ -131,7 +124,6 @@ public class ButtonGridFragment extends Fragment {
         }
     }
 
-    // Equivalent to createHorizontalStack()
     private LinearLayout createHorizontalStack() {
         LinearLayout row = new LinearLayout(requireContext());
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -147,7 +139,6 @@ public class ButtonGridFragment extends Fragment {
         return row;
     }
 
-    // Equivalent to RadioButton class
     private Button createRadioButton(int number) {
         Button button = new Button(requireContext());
         button.setText(String.valueOf(number));
@@ -160,12 +151,10 @@ public class ButtonGridFragment extends Fragment {
         params.setMargins(8, 8, 8, 8);
         button.setLayoutParams(params);
 
-        // Equivalent to RadioButton.isSelected didSet
         button.setOnClickListener(v -> radioTapped(button));
         return button;
     }
 
-    // Equivalent to isSelected didSet on RadioButton
     private void setRadioSelected(Button button, boolean selected) {
         if (selected) {
             button.setBackgroundColor(Color.BLUE);
@@ -176,7 +165,6 @@ public class ButtonGridFragment extends Fragment {
         }
     }
 
-    // Equivalent to createStyledButton()
     private Button createStyledButton(String title) {
         Button button = new Button(requireContext());
         button.setText(" " + title + " ");
@@ -191,7 +179,7 @@ public class ButtonGridFragment extends Fragment {
         params.setMargins(8, 8, 8, 8);
         button.setLayoutParams(params);
 
-        // Equivalent to toggle vs action detection
+        // Toggle vs Action detection
         if (toggleState.containsKey(title)) {
             button.setOnClickListener(v -> toggleTapped(button, title));
         } else {
@@ -201,7 +189,6 @@ public class ButtonGridFragment extends Fragment {
         return button;
     }
 
-    // Equivalent to @objc func radioTapped()
     private void radioTapped(Button sender) {
         for (Button radio : radios) {
             setRadioSelected(radio, false);
@@ -210,9 +197,8 @@ public class ButtonGridFragment extends Fragment {
         dollarArgument = Integer.parseInt(sender.getText().toString().trim());
     }
 
-    // Equivalent to @objc func buttonTapped()
     private void buttonTapped(Button sender, String action) {
-        // Equivalent to UIView.animate fade out and back in
+        // Animation of fading in and out
         sender.setAlpha(0.3f);
         ObjectAnimator.ofFloat(sender, "alpha", 0.3f, 1.0f)
                 .setDuration(400)
@@ -227,9 +213,8 @@ public class ButtonGridFragment extends Fragment {
         }
     }
 
-    // Equivalent to @objc func toggleTapped()
     private void toggleTapped(Button sender, String action) {
-        // Swap background and text color — equivalent to oldBG/oldText swap
+        // Swap background and text color
         int oldBg   = Color.BLUE;
         int oldText = Color.WHITE;
 
@@ -260,7 +245,6 @@ public class ButtonGridFragment extends Fragment {
         }
     }
 
-    // Equivalent to func onVerified()
     public void onVerified() {
         // Reserved for future use
     }

@@ -40,15 +40,15 @@ import bluedog.ShowEffects;
 public class MainActivity extends AppCompatActivity implements BridgeObserver.Listener, ShowEffects {
     private static final String TAG = "MainActivity";
 
-    private static final String DEMO_SHOW_JSON =
-            "{\"title\":\"CrowdQ Demo\",\"version\":\"1.0\",\"commands\":{" +
-                    "\".right\":{\"flash\":{\"intensity\":0.8,\"duration\":300},\"buzz\":{\"pattern\":2,\"duration\":200}}," +
-                    "\".left\":{\"flash\":{\"intensity\":0.8,\"duration\":300},\"buzz\":{\"pattern\":2,\"duration\":200}}," +
-                    "\".up\":{\"flash\":{\"intensity\":1.0,\"duration\":500},\"buzz\":{\"pattern\":3,\"duration\":300}}," +
-                    "\".down\":{\"flash\":{\"intensity\":0.4,\"duration\":200},\"buzz\":{\"pattern\":1,\"duration\":150}}," +
-                    "\".inward\":{\"flash\":{\"intensity\":1.0,\"duration\":700},\"buzz\":{\"pattern\":5,\"duration\":400},\"sync\":true}," +
-                    "\".outward\":{\"flash\":{\"intensity\":0.6,\"duration\":250},\"buzz\":{\"pattern\":4,\"duration\":200}}" +
-                    "}}";
+//    private static final String DEMO_SHOW_JSON =
+//            "{\"title\":\"CrowdQ Demo\",\"version\":\"1.0\",\"commands\":{" +
+//                    "\".right\":{\"flash\":{\"intensity\":0.8,\"duration\":300},\"buzz\":{\"pattern\":2,\"duration\":200}}," +
+//                    "\".left\":{\"flash\":{\"intensity\":0.8,\"duration\":300},\"buzz\":{\"pattern\":2,\"duration\":200}}," +
+//                    "\".up\":{\"flash\":{\"intensity\":1.0,\"duration\":500},\"buzz\":{\"pattern\":3,\"duration\":300}}," +
+//                    "\".down\":{\"flash\":{\"intensity\":0.4,\"duration\":200},\"buzz\":{\"pattern\":1,\"duration\":150}}," +
+//                    "\".inward\":{\"flash\":{\"intensity\":1.0,\"duration\":700},\"buzz\":{\"pattern\":5,\"duration\":400},\"sync\":true}," +
+//                    "\".outward\":{\"flash\":{\"intensity\":0.6,\"duration\":250},\"buzz\":{\"pattern\":4,\"duration\":200}}" +
+//                    "}}";
 
     private BlueDog blueDog;
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements BridgeObserver.Li
         buzzPlayer = new BuzzController(this);
 
         blueDog = new BlueDog(this);
-        blueDog.loadShow(DEMO_SHOW_JSON);   // pre-load so commands work immediately
+//        blueDog.loadShow(DEMO_SHOW_JSON);   // preload so commands work immediately
 
         // Temporary test — fires .right command 4 seconds after launch
         mainHandler.postDelayed(() -> {

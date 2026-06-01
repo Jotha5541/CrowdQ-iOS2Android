@@ -71,7 +71,7 @@ public class BridgeObserver {
                 .setServiceUuid(new ParcelUuid(phonesUuid))
                 .build();
 
-        // Low latency, no delay
+        // Low latency reduces delay
         ScanSettings settings = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                 .setReportDelay(0L)
@@ -111,7 +111,7 @@ public class BridgeObserver {
         CrowdQExchange exchange = CrowdQExchange.parse(packet);
         if (exchange == null) return;
 
-        // Optimization: Dispatch handling to single-thread queue
+        // Optimization: Dispatch handling for single-thread to prevent command races
         serialExecutor.execute(() -> {
             if (exchange.getSequence() <= lastSequence) {
                 Log.d(TAG, "Ignored out-of-order packet. Current: " + exchange.getSequence() + ", Last: " + lastSequence);
