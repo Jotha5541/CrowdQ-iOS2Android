@@ -86,10 +86,8 @@ public class SettingsFragment extends Fragment {
         optionsButton        = view.findViewById(R.id.optionsButton);
         hubSegmentedControl  = view.findViewById(R.id.hubSegmentedControl);
 
-        // Equivalent to setupMenu(["free/demo.json"], overwrite: false)
         setupMenu(Collections.singletonList("free/demo.json"), false);
 
-        // Equivalent to hubSegmentedControl.addTarget hubChanged
         hubSegmentedControl.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -99,10 +97,8 @@ public class SettingsFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Equivalent to sensorSwitch.addTarget sensorSwitchChanged
         sensorSwitch.setOnCheckedChangeListener((buttonView, isOn) -> sensorSwitchChanged(isOn));
 
-        // Equivalent to rangeSlider.addTarget sliderChanged
         rangeSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -154,7 +150,7 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    // Equivalent to getBlueDog call inside setupMenu action
+    // getBlueDog call inside setupMenu action
     private void loadShow(String title) {
         executor.execute(() -> {
             try {
@@ -261,7 +257,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (timer != null) timer.cancel();
+        if (scheduler != null) scheduler.shutdownNow();
         executor.shutdown();
     }
 }

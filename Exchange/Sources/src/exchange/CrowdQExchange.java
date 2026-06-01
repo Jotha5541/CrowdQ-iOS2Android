@@ -19,6 +19,8 @@ public class CrowdQExchange {
 
     public CrowdQExchange() {} // Empty constructor
 
+
+    // BLE packet transmission
     public CrowdQExchange(int sequence, CrowdQExchangeTag tag, int argument, String payload) {
         this.sequence = sequence;
         this.tag = tag;

@@ -33,13 +33,11 @@ public class ContinuousControlFragment extends Fragment {
         statusSwitch = view.findViewById(R.id.statusSwitch);
         rangeSlider  = view.findViewById(R.id.rangeSlider);
 
-        // Equivalent to statusSwitch.addTarget switchToggled
         statusSwitch.setOnCheckedChangeListener((buttonView, isOn) -> {
             rangeSlider.setEnabled(isOn);
             valueLabel.setAlpha(isOn ? 1.0f : 0.5f);
         });
 
-        // Equivalent to rangeSlider.addTarget sliderMoved
         rangeSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
